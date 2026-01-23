@@ -18,6 +18,14 @@
 /out/
 company-profile-deployment.zip
 
+# deployment files
+*.zip
+*.tar.gz
+*.rar
+*deployment*
+*backup*
+*build*
+
 # production
 /build
 
