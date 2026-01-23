@@ -4,6 +4,10 @@ import prisma from '@/lib/prisma';
 
 export default async function Footer() {
     const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+    const services = await prisma.service.findMany({
+        orderBy: { order: 'asc' },
+        take: 4 // Limit to 4 services for footer
+    });
 
     return (
         <footer className="bg-slate-900 text-slate-300 py-20">
@@ -62,10 +66,17 @@ export default async function Footer() {
                     <div>
                         <h4 className="text-white font-heading font-bold mb-6">Our Services</h4>
                         <ul className="space-y-4 text-sm">
-                            <li><Link href="/services" className="hover:text-primary transition-colors">Web Development</Link></li>
-                            <li><Link href="/services" className="hover:text-primary transition-colors">UI/UX Design</Link></li>
-                            <li><Link href="/services" className="hover:text-primary transition-colors">Digital Marketing</Link></li>
-                            <li><Link href="/services" className="hover:text-primary transition-colors">SEO Optimization</Link></li>
+                            {services.length === 0 ? (
+                                <li><Link href="/services" className="hover:text-primary transition-colors">Our Services</Link></li>
+                            ) : (
+                                services.map((service) => (
+                                    <li key={service.id}>
+                                        <Link href={`/services/${service.id}`} className="hover:text-primary transition-colors">
+                                            {service.title}
+                                        </Link>
+                                    </li>
+                                ))
+                            )}
                         </ul>
                     </div>
 

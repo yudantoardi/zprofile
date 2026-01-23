@@ -10,7 +10,7 @@ interface Project {
     title: string;
     description: string;
     thumbnail: string | null;
-    Category?: { name: string } | null;
+    Category?: { id: string; name: string } | null;
 }
 
 interface Category {
