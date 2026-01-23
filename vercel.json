@@ -1,3 +1,10 @@
 {
-  "regions": ["sin1"]
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "regions": ["sin1"],
+  "env": {
+    "DB_URL_PROD": "@database_url"
+  }
 }
