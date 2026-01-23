@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean": "rm -rf .next node_modules/.cache",
+    "build:analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@prisma/client": "^6.19.1",
@@ -29,6 +31,7 @@
     "zod": "^4.3.4"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.4",

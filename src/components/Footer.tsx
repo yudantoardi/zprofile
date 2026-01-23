@@ -5,6 +5,10 @@ import prisma from '@/lib/prisma';
 export default async function Footer() {
     const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
     const services = await prisma.service.findMany({
+        select: {
+            id: true,
+            title: true,
+        },
         orderBy: { order: 'asc' },
         take: 4 // Limit to 4 services for footer
     });

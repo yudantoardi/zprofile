@@ -53,7 +53,7 @@ export default function AboutSection({
                         className="space-y-8"
                     >
                         <div>
-                            <span className="text-secondary font-bold text-sm uppercase tracking-widest block mb-4 px-4 py-1 bg-secondary/10 rounded-full inline-block">
+                            <span className="text-primary font-bold text-sm uppercase tracking-widest block mb-4 py-1 bg-secondary/10 rounded-full inline-block">
                                 {subtitle || 'About Us'}
                             </span>
                             <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground leading-tight tracking-tight">

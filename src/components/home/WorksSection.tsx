@@ -48,7 +48,7 @@ export default function WorksSection({
             <div className="container-custom">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 text-left">
                     <div className="max-w-2xl">
-                        <span className="text-secondary font-bold text-sm uppercase tracking-widest block mb-4">
+                        <span className="text-primary font-bold text-sm uppercase tracking-widest block mb-4">
                             {subtitle || 'Our Works'}
                         </span>
                         <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight mb-4">
@@ -56,20 +56,29 @@ export default function WorksSection({
                         </h2>
                         {description && <p className="text-muted text-lg">{description}</p>}
                     </div>
-                    <div className="relative">
-                        <select
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
-                            className="btn-secondary group px-8 py-4 pr-12 appearance-none cursor-pointer"
-                        >
-                            <option value="all">All Categories</option>
-                            {displayCategories.map((category) => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
-                        <ChevronDown size={18} className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                    <div>
+                        {displayCategories.length === 0 ? (
+                            <Link href="/portfolio" className="btn-secondary group px-8 py-4">
+                                View All Works
+                                <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        ) : (
+                            <div className="relative">
+                                <select
+                                    value={selectedCategory}
+                                    onChange={(e) => setSelectedCategory(e.target.value)}
+                                    className="btn-secondary group px-8 py-4 pr-12 appearance-none cursor-pointer"
+                                >
+                                    <option value="all">All Categories</option>
+                                    {displayCategories.map((category) => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <ChevronDown size={18} className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                            </div>
+                        )}
                     </div>
                 </div>
 

@@ -13,17 +13,38 @@ export default async function Home() {
   });
 
   const services = await prisma.service.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+    },
     orderBy: { order: 'asc' },
     take: 4
   });
 
   const portfolios = await prisma.portfolio.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      thumbnail: true,
+      Category: {
+        select: { id: true, name: true }
+      }
+    },
     orderBy: { order: 'asc' },
-    include: { Category: true },
     take: 3
   });
 
   const testimonials = await prisma.testimonial.findMany({
+    select: {
+      id: true,
+      name: true,
+      role: true,
+      content: true,
+      rating: true,
+      image: true,
+    },
     orderBy: { order: 'asc' },
     take: 5
   });
