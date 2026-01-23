@@ -2,9 +2,26 @@ import prisma from "@/lib/prisma";
 import { MessageSquare, Users, Briefcase, Eye } from "lucide-react";
 
 export default async function AdminDashboard() {
-    const messageCount = await prisma.message.count({ where: { isRead: false } });
-    const serviceCount = await prisma.service.count();
-    const portfolioCount = await prisma.portfolio.count();
+    // Fetch data with error handling
+    let messageCount = 0;
+    let serviceCount = 0;
+    let portfolioCount = 0;
+    let recentMessages: any[] = [];
+
+    try {
+        if (process.env.DATABASE_URL) {
+            messageCount = await prisma.message.count({ where: { isRead: false } });
+            serviceCount = await prisma.service.count();
+            portfolioCount = await prisma.portfolio.count();
+            recentMessages = await prisma.message.findMany({
+                take: 5,
+                orderBy: { createdAt: 'desc' }
+            });
+        }
+    } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+        // Continue with default values
+    }
 
     const stats = [
         { label: 'Unread Messages', value: messageCount, icon: <MessageSquare className="text-blue-600" />, color: 'bg-blue-50' },
@@ -12,11 +29,6 @@ export default async function AdminDashboard() {
         { label: 'Portfolio Items', value: portfolioCount, icon: <Users className="text-orange-600" />, color: 'bg-orange-50' },
         { label: 'Site Visitors', value: '1,234', icon: <Eye className="text-emerald-600" />, color: 'bg-emerald-50' },
     ];
-
-    const recentMessages = await prisma.message.findMany({
-        take: 5,
-        orderBy: { createdAt: 'desc' }
-    });
 
     return (
         <div className="space-y-10">
