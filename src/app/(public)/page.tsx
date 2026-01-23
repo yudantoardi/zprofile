@@ -1,0 +1,80 @@
+import Hero from "@/components/home/Hero";
+import AboutSection from "@/components/home/AboutSection";
+import ServicesSection from "@/components/home/ServicesSection";
+import PartnersSection from "@/components/home/PartnersSection";
+import WorksSection from "@/components/home/WorksSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import CTASection from "@/components/home/CTASection";
+import prisma from "@/lib/prisma";
+
+export default async function Home() {
+  const content = await prisma.staticContent.findMany({
+    where: { page: 'homepage' }
+  });
+
+  const services = await prisma.service.findMany({
+    orderBy: { order: 'asc' },
+    take: 4
+  });
+
+  const portfolios = await prisma.portfolio.findMany({
+    orderBy: { order: 'asc' },
+    include: { Category: true },
+    take: 3
+  });
+
+  const testimonials = await prisma.testimonial.findMany({
+    orderBy: { order: 'asc' },
+    take: 5
+  });
+
+  const getContent = (key: string) => content.find(c => c.key === key)?.value;
+
+  return (
+    <>
+      <Hero
+        subtitle={getContent('hero_subtitle')}
+        title={getContent('hero_title')}
+        description={getContent('hero_description')}
+        ctaText={getContent('hero_cta_text')}
+        ctaLink={getContent('hero_cta_link')}
+        bgImage={getContent('hero_bg_image')}
+      />
+      <PartnersSection
+        subtitle={getContent('partners_subtitle')}
+        title={getContent('partners_title')}
+      />
+      <AboutSection
+        subtitle={getContent('about_subtitle')}
+        title={getContent('about_title')}
+        description={getContent('about_description')}
+        ctaText={getContent('about_cta_text')}
+        image={getContent('about_image')}
+      />
+      <ServicesSection
+        subtitle={getContent('services_subtitle')}
+        title={getContent('services_title')}
+        description={getContent('services_description')}
+        services={services}
+      />
+      <WorksSection
+        subtitle={getContent('works_subtitle')}
+        title={getContent('works_title')}
+        description={getContent('works_description')}
+        ctaText={getContent('works_cta_text')}
+        portfolios={portfolios}
+      />
+      <TestimonialsSection
+        subtitle={getContent('testimonials_subtitle')}
+        title={getContent('testimonials_title')}
+        description={getContent('testimonials_description')}
+        testimonials={testimonials}
+      />
+      <CTASection
+        title={getContent('cta_title')}
+        description={getContent('cta_description')}
+        buttonText={getContent('cta_button_text')}
+      />
+    </>
+  );
+}

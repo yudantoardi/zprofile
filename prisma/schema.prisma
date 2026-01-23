@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id            String   @id @default("singleton")
+  logo          String?
+  companyName   String   @default("My Company")
+  address       String?
+  email         String?
+  phone         String?
+  instagram     String?
+  linkedin      String?
+  behance       String?
+  dribbble      String?
+  gtmId         String?
+  seoTitle      String?
+  seoDescription String?
+  updatedAt     DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  icon        String?  // Lucide icon name or image path
+  title       String
+  description String
+  content     String?  // For detail page
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Portfolio {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String?  // Keep for legacy or simple display
+  categoryId  String?
+  Category    PortfolioCategory? @relation(fields: [categoryId], references: [id])
+  thumbnail   String?
+  content     String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PortfolioCategory {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  portfolios  Portfolio[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  image     String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  image     String?
+  content   String
+  rating    Int      @default(5)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model CustomPage {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  image     String?
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Menu {
+  id        String   @id @default(cuid())
+  title     String
+  link      String
+  order     Int      @default(0)
+  parentId  String?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PartnerLogo {
+  id        String   @id @default(cuid())
+  name      String?
+  image     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model StaticContent {
+  id        String   @id @default(cuid())
+  page      String   // e.g., 'homepage', 'about', 'services', 'portfolio'
+  key       String   // e.g., 'hero_title', 'about_text'
+  value     String   @default("")
+  updatedAt DateTime @updatedAt
+
+  @@unique([page, key])
+}
+
+model PricingPlan {
+  id          String   @id @default(cuid())
+  name        String
+  price       String
+  period      String   @default("month") // e.g., month, year
+  description String?
+  features    String   // Store as JSON string or newline-separated
+  isPopular   Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

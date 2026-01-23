@@ -9,15 +9,32 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.1",
+    "@tiptap/extension-image": "^3.14.0",
+    "@tiptap/extension-link": "^3.14.0",
+    "@tiptap/react": "^3.14.0",
+    "@tiptap/starter-kit": "^3.14.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.562.0",
     "next": "16.1.1",
+    "nodemailer": "^7.0.12",
+    "prisma": "^6.19.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.69.0",
+    "swiper": "^12.0.3",
+    "tailwind-merge": "^3.4.0",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^7.0.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
