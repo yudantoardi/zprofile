@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Save, X } from 'lucide-react';
-import { savePricing } from '@/app/admin/pricing/actions';
+import { savePricing } from '@/app/admin/pricing-actions';
 import { PricingPlan } from '@prisma/client';
 
 interface PricingFormProps {

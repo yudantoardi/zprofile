@@ -1,7 +1,7 @@
 'use client';
 
 import { Edit, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
-import { deletePricing, updatePricingOrder } from '@/app/admin/pricing/actions';
+import { deletePricing, updatePricingOrder } from '@/app/admin/pricing-actions';
 import { PricingPlan } from '@prisma/client';
 
 interface PricingListProps {

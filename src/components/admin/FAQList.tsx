@@ -1,7 +1,7 @@
 'use client';
 
 import { Edit, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
-import { deleteFAQ, updateFAQOrder } from '@/app/admin/faq/actions';
+import { deleteFAQ, updateFAQOrder } from '@/app/admin/faq-actions';
 import { Faq } from '@prisma/client';
 
 interface FAQListProps {

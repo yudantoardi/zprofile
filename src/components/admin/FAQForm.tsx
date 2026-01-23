@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Save, X } from 'lucide-react';
-import { saveFAQ } from '@/app/admin/faq/actions';
+import { saveFAQ } from '@/app/admin/faq-actions';
 import { Faq } from '@prisma/client';
 
 interface FAQFormProps {

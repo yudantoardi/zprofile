@@ -12,6 +12,48 @@ const nextConfig: NextConfig = {
   // Enable compression
   compress: true,
 
+  // Turbopack configuration
+  turbopack: {},
+
+  // Aggressive optimizations
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizeCss: true,
+  },
+
+  // Webpack optimizations
+  webpack: (config, { dev, isServer }) => {
+    // Optimize bundle splitting
+    if (!dev && !isServer) {
+      config.optimization.splitChunks.chunks = 'all';
+      config.optimization.splitChunks.cacheGroups = {
+        ...config.optimization.splitChunks.cacheGroups,
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+          priority: 10,
+        },
+        radix: {
+          test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+          name: 'radix-ui',
+          chunks: 'all',
+          priority: 20,
+        },
+      };
+    }
+
+    // Remove unnecessary files in production
+    if (!dev) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        // Remove development-only dependencies
+      };
+    }
+
+    return config;
+  },
+
   // Production optimizations
   ...(process.env.NODE_ENV === 'production' && {
     poweredByHeader: false,
