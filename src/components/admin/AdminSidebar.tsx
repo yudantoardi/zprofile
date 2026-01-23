@@ -12,7 +12,6 @@ import {
     DollarSign,
     HelpCircle
 } from 'lucide-react';
-import prisma from '@/lib/prisma';
 import SidebarClient from './SidebarClient';
 
 const menus = [
@@ -31,8 +30,10 @@ const menus = [
     { name: 'Settings', href: '/admin/settings', icon: <Settings size={20} /> },
 ];
 
-export default async function AdminSidebar() {
-    const unreadCount = await prisma.message.count({ where: { isRead: false } });
+interface AdminSidebarProps {
+    unreadCount: number;
+}
 
+export default function AdminSidebar({ unreadCount }: AdminSidebarProps) {
     return <SidebarClient menus={menus} unreadCount={unreadCount} />;
 }

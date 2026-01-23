@@ -17,7 +17,7 @@ interface SidebarClientProps {
 export default function SidebarClient({ menus, unreadCount }: SidebarClientProps) {
     const pathname = usePathname();
 
-    if (pathname === '/admin/login') return null;
+    if (pathname === '/admin') return null;
 
     return (
         <aside className="w-72 bg-slate-900 text-slate-300 flex flex-col h-screen sticky top-0">
