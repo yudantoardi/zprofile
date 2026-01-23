@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "SKIP_ENV_VALIDATION=true next build --webpack",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "next lint",
     "clean": "rm -rf .next node_modules/.cache",
     "clean:aggressive": "rm -rf .next node_modules/.cache && find node_modules -name '*.map' -type f -delete && find node_modules -name '*.d.ts' -type f -delete 2>/dev/null || true",
     "build:analyze": "ANALYZE=true npm run build",
