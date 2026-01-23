@@ -17,7 +17,7 @@ model SiteSettings {
   id            String   @id @default("singleton")
   logo          String?
   companyName   String   @default("My Company")
-  address       String?
+  address       String? 
   email         String?
   phone         String?
   instagram     String?
