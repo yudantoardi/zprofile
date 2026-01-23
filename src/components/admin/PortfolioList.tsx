@@ -10,7 +10,7 @@ type PortfolioWithCategory = Portfolio & {
 
 interface PortfolioListProps {
     portfolios: PortfolioWithCategory[];
-    onEdit: (portfolio: Portfolio) => void;
+    onEdit: (portfolio: PortfolioWithCategory) => void;
     onDelete: (id: string) => void;
     onAdd: () => void;
 }

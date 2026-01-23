@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
 import { Search, Globe, Save } from "lucide-react";
+import { SiteSettings } from "@prisma/client";
 
 export default async function SEOPage() {
-    const settings = await prisma.siteSettings.findFirst() || {};
+    const settings = (await prisma.siteSettings.findFirst()) as SiteSettings | null;
 
     return (
         <div className="space-y-10">
@@ -20,11 +21,11 @@ export default async function SEOPage() {
                     <div className="space-y-6">
                         <div>
                             <label className="block text-sm font-bold text-foreground mb-2">Meta Title Template</label>
-                            <input type="text" defaultValue={settings.seoTitle || 'CorpProfile - Best Digital Agency'} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" />
+                            <input type="text" defaultValue={settings?.seoTitle || 'CorpProfile - Best Digital Agency'} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" />
                         </div>
                         <div>
                             <label className="block text-sm font-bold text-foreground mb-2">Meta Description</label>
-                            <textarea defaultValue={settings.seoDescription || ''} rows={4} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none"></textarea>
+                            <textarea defaultValue={settings?.seoDescription || ''} rows={4} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -37,7 +38,7 @@ export default async function SEOPage() {
                     <div className="space-y-6">
                         <div>
                             <label className="block text-sm font-bold text-foreground mb-2">Google Tag Manager (GTM) ID</label>
-                            <input type="text" defaultValue={settings.gtmId || ''} placeholder="GTM-XXXXXXX" className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" />
+                            <input type="text" defaultValue={settings?.gtmId || ''} placeholder="GTM-XXXXXXX" className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" />
                         </div>
                     </div>
 

@@ -72,7 +72,7 @@ export default async function PricingPage() {
                         )}
                     </div>
 
-                    <div className="mt-24 max-w-4xl mx-auto bg-white rounded-[2.5rem] p-12 border border-border shadow-sm">
+                    <div className="mt-24 max-w-7xl mx-auto bg-white rounded-[2.5rem] p-12 border border-border shadow-sm">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                             <div className="lg:col-span-1">
                                 <h3 className="text-3xl font-heading font-bold text-foreground mb-4">Frequently Asked Questions</h3>

@@ -13,6 +13,10 @@ export default async function PortfolioPage() {
         include: { Category: true }
     });
 
+    const categories = await prisma.portfolioCategory.findMany({
+        orderBy: { name: 'asc' }
+    });
+
     const getContent = (key: string) => content.find(c => c.key === key)?.value;
 
     return (
@@ -23,7 +27,7 @@ export default async function PortfolioPage() {
                 breadcrumbs={[{ name: 'Portfolio', href: '/portfolio' }]}
             />
 
-            <WorksSection portfolios={portfolios} />
+            <WorksSection portfolios={portfolios} categories={categories} />
 
             <section className="py-24 bg-white border-t border-border">
                 <div className="container-custom text-center">

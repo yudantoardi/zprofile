@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface Project {
     id: string;
@@ -12,12 +13,18 @@ interface Project {
     Category?: { name: string } | null;
 }
 
+interface Category {
+    id: string;
+    name: string;
+}
+
 interface WorksSectionProps {
     subtitle?: string;
     title?: string;
     description?: string;
     ctaText?: string;
     portfolios?: Project[];
+    categories?: Category[];
 }
 
 export default function WorksSection({
@@ -25,9 +32,16 @@ export default function WorksSection({
     title,
     description,
     ctaText,
-    portfolios
+    portfolios,
+    categories
 }: WorksSectionProps) {
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const displayPortfolios = portfolios || [];
+    const displayCategories = categories || [];
+
+    const filteredPortfolios = selectedCategory === 'all'
+        ? displayPortfolios
+        : displayPortfolios.filter(p => p.Category?.id === selectedCategory);
 
     return (
         <section className="py-24 bg-white">
@@ -42,21 +56,30 @@ export default function WorksSection({
                         </h2>
                         {description && <p className="text-muted text-lg">{description}</p>}
                     </div>
-                    <div>
-                        <Link href="/portfolio" className="btn-secondary group px-8 py-4">
-                            {ctaText || 'All Our Work'}
-                            <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                        </Link>
+                    <div className="relative">
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="btn-secondary group px-8 py-4 pr-12 appearance-none cursor-pointer"
+                        >
+                            <option value="all">All Categories</option>
+                            {displayCategories.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+                        <ChevronDown size={18} className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none" />
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {displayPortfolios.length === 0 ? (
+                    {filteredPortfolios.length === 0 ? (
                         <div className="col-span-full py-20 text-center text-muted italic">
                             No projects to display at the moment.
                         </div>
                     ) : (
-                        displayPortfolios.map((item, index) => (
+                        filteredPortfolios.map((item, index) => (
                             <motion.div
                                 key={item.id}
                                 initial={{ opacity: 0, y: 30 }}
@@ -86,7 +109,7 @@ export default function WorksSection({
                                 <p className="text-muted leading-relaxed mb-6 line-clamp-2">
                                     {item.description}
                                 </p>
-                                <Link href="/portfolio" className="inline-flex items-center gap-2 font-bold text-foreground hover:text-primary transition-colors group/link">
+                                <Link href={`/portfolio/${item.id}`} className="inline-flex items-center gap-2 font-bold text-foreground hover:text-primary transition-colors group/link">
                                     See Case Study <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
                                 </Link>
                             </motion.div>

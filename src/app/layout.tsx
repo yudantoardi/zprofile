@@ -13,7 +13,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CorpProfile - Professional Digital Agency",
+  title: "Ziraymedia - Professional Digital Agency",
   description: "Innovative digital solutions for your business growth.",
 };
 

@@ -9,17 +9,21 @@ import { savePortfolio, deletePortfolio } from "./actions";
 import { LayoutGrid, Tags } from "lucide-react";
 import { useToast } from "@/components/Toast";
 
+type PortfolioWithCategory = Portfolio & {
+    Category: PortfolioCategory | null;
+};
+
 export default function PortfolioClient({
     initialPortfolios,
     categories
 }: {
-    initialPortfolios: Portfolio[],
+    initialPortfolios: PortfolioWithCategory[],
     categories: PortfolioCategory[]
 }) {
     const [activeTab, setActiveTab] = useState<'projects' | 'categories'>('projects');
     const [portfolios, setPortfolios] = useState(initialPortfolios);
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const [editingItem, setEditingItem] = useState<Portfolio | null>(null);
+    const [editingItem, setEditingItem] = useState<PortfolioWithCategory | null>(null);
     const { showToast, ToastComponent } = useToast();
 
     const handleAdd = () => {
@@ -27,7 +31,7 @@ export default function PortfolioClient({
         setIsFormOpen(true);
     };
 
-    const handleEdit = (portfolio: Portfolio) => {
+    const handleEdit = (portfolio: PortfolioWithCategory) => {
         setEditingItem(portfolio);
         setIsFormOpen(true);
     };
