@@ -5,6 +5,6 @@
   "devCommand": "npm run dev",
   "regions": ["sin1"],
   "env": {
-    "DATABASE_URL": "@database_url"
+    "DB_URL_PROD": "@database_url"
   }
 }
