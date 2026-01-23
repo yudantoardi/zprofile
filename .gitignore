@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+company-profile-deployment.zip
 
 # production
 /build
