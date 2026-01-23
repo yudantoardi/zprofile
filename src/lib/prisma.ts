@@ -4,8 +4,9 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 // Simple logic to help Next.js pick up major schema changes in dev mode
 if (process.env.NODE_ENV !== 'production' && globalForPrisma.prisma) {
-    // If you add new models and they aren't appearing, this check helps trigger a refresh
-    if (!('faq' in globalForPrisma.prisma) && ('siteSettings' in globalForPrisma.prisma)) {
+    // Check if we have the expected models, if not, reset the client
+    const hasExpectedModels = 'siteSettings' in globalForPrisma.prisma && 'service' in globalForPrisma.prisma;
+    if (!hasExpectedModels) {
         // @ts-ignore
         globalForPrisma.prisma = undefined;
     }
