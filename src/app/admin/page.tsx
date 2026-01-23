@@ -26,9 +26,12 @@ export default function AdminLogin() {
             const data = await response.json();
 
             if (response.ok) {
-                // Dispatch auth change event to trigger AdminLayoutClient re-check
-                window.dispatchEvent(new CustomEvent('auth-change'));
-                setPassword(''); // Clear password field
+                // Clear password field and redirect to dashboard
+                setPassword('');
+                // Small delay to ensure cookie is set before redirect
+                setTimeout(() => {
+                    router.push('/admin/dashboard');
+                }, 200);
             } else {
                 setError(data.error || 'Login failed');
             }
