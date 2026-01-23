@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers';
 
-const ADMIN_PASSWORD = 'admin'; // In real app, use env and hash
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'; // Use env variable or default
 
 export async function login(password: string) {
     if (password === ADMIN_PASSWORD) {
         const cookieStore = await cookies();
         cookieStore.set('admin_session', 'true', {
-            httpOnly: true,
+            httpOnly: false, // Allow client-side access
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 1 day

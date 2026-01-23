@@ -15,22 +15,29 @@ export default function AdminLayout({
     const pathname = usePathname();
 
     useEffect(() => {
-        const checkAuth = () => {
-            const authStatus = document.cookie.includes('admin_session=true');
-            setIsAuthenticated(authStatus);
-            setIsLoading(false);
+        const checkAuth = async () => {
+            try {
+                const response = await fetch('/api/admin/auth');
+                const data = await response.json();
+                setIsAuthenticated(data.authenticated);
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                setIsAuthenticated(false);
+            } finally {
+                setIsLoading(false);
+            }
 
             const isLoginPage = pathname === '/admin/login';
 
-            if (!authStatus && !isLoginPage) {
+            if (!isAuthenticated && !isLoginPage) {
                 router.push('/admin/login');
-            } else if (authStatus && isLoginPage) {
+            } else if (isAuthenticated && isLoginPage) {
                 router.push('/admin/dashboard');
             }
         };
 
         checkAuth();
-    }, [pathname, router]);
+    }, [pathname, router, isAuthenticated]);
 
     if (isLoading) {
         return (
