@@ -12,7 +12,7 @@
     "build:analyze": "ANALYZE=true npm run build",
     "build:optimized": "npm run clean:aggressive && npm run build",
     "optimize": "npm run clean:aggressive && npm audit fix --force && npm dedupe",
-    "postinstall": "prisma generate",
+    "postinstall": "if [ \"$DATABASE_URL\" ]; then prisma generate; fi",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts"
   },
