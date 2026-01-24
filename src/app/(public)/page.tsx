@@ -8,46 +8,60 @@ import CTASection from "@/components/home/CTASection";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
-  const content = await prisma.staticContent.findMany({
-    where: { page: 'homepage' }
-  });
+  let content: any[] = [];
+  let services: any[] = [];
+  let portfolios: any[] = [];
+  let testimonials: any[] = [];
 
-  const services = await prisma.service.findMany({
-    select: {
-      id: true,
-      title: true,
-      description: true,
-    },
-    orderBy: { order: 'asc' },
-    take: 4
-  });
+  try {
+    content = await prisma.staticContent.findMany({
+      where: { page: 'homepage' }
+    });
 
-  const portfolios = await prisma.portfolio.findMany({
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      thumbnail: true,
-      Category: {
-        select: { id: true, name: true }
-      }
-    },
-    orderBy: { order: 'asc' },
-    take: 3
-  });
+    services = await prisma.service.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+      },
+      orderBy: { order: 'asc' },
+      take: 4
+    });
 
-  const testimonials = await prisma.testimonial.findMany({
-    select: {
-      id: true,
-      name: true,
-      role: true,
-      content: true,
-      rating: true,
-      image: true,
-    },
-    orderBy: { order: 'asc' },
-    take: 5
-  });
+    portfolios = await prisma.portfolio.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        thumbnail: true,
+        Category: {
+          select: { id: true, name: true }
+        }
+      },
+      orderBy: { order: 'asc' },
+      take: 3
+    });
+
+    testimonials = await prisma.testimonial.findMany({
+      select: {
+        id: true,
+        name: true,
+        role: true,
+        content: true,
+        rating: true,
+        image: true,
+      },
+      orderBy: { order: 'asc' },
+      take: 5
+    });
+  } catch (error) {
+    // Handle database connection errors during build
+    console.warn('Database not available during build, using default values');
+    content = [];
+    services = [];
+    portfolios = [];
+    testimonials = [];
+  }
 
   const getContent = (key: string) => content.find(c => c.key === key)?.value;
 

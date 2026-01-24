@@ -7,9 +7,17 @@ interface PartnersSectionProps {
 }
 
 export default async function PartnersSection({ subtitle, title }: PartnersSectionProps) {
-    const partners = await prisma.partnerLogo.findMany({
-        orderBy: { order: 'asc' }
-    });
+    let partners: any[] = [];
+
+    try {
+        partners = await prisma.partnerLogo.findMany({
+            orderBy: { order: 'asc' }
+        });
+    } catch (error) {
+        // Handle database connection errors during build
+        console.warn('Database not available during build, using default values for partners');
+        partners = [];
+    }
 
     if (partners.length === 0) return null;
 

@@ -3,15 +3,25 @@ import { Mail, MapPin, Phone, Instagram, Linkedin, Bookmark, Dribbble } from 'lu
 import prisma from '@/lib/prisma';
 
 export default async function Footer() {
-    const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
-    const services = await prisma.service.findMany({
-        select: {
-            id: true,
-            title: true,
-        },
-        orderBy: { order: 'asc' },
-        take: 4 // Limit to 4 services for footer
-    });
+    let settings: any = null;
+    let services: any[] = [];
+
+    try {
+        settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+        services = await prisma.service.findMany({
+            select: {
+                id: true,
+                title: true,
+            },
+            orderBy: { order: 'asc' },
+            take: 4 // Limit to 4 services for footer
+        });
+    } catch (error) {
+        // Handle database connection errors during build
+        console.warn('Database not available during build, using default values for footer');
+        settings = null;
+        services = [];
+    }
 
     return (
         <footer className="bg-slate-900 text-slate-300 py-20">

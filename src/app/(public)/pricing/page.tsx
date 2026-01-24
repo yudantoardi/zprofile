@@ -6,17 +6,29 @@ import { Check } from "lucide-react";
 import Link from "next/link";
 
 export default async function PricingPage() {
-    const content = await prisma.staticContent.findMany({
-        where: { page: 'pricing' }
-    });
+    let content: any[] = [];
+    let pricings: any[] = [];
+    let faqs: any[] = [];
 
-    const pricings = await prisma.pricingPlan.findMany({
-        orderBy: { order: 'asc' }
-    });
+    try {
+        content = await prisma.staticContent.findMany({
+            where: { page: 'pricing' }
+        });
 
-    const faqs = await prisma.faq.findMany({
-        orderBy: { order: 'asc' }
-    });
+        pricings = await prisma.pricingPlan.findMany({
+            orderBy: { order: 'asc' }
+        });
+
+        faqs = await prisma.faq.findMany({
+            orderBy: { order: 'asc' }
+        });
+    } catch (error) {
+        // Handle database connection errors during build
+        console.warn('Database not available during build, using default values');
+        content = [];
+        pricings = [];
+        faqs = [];
+    }
 
     const getContent = (key: string) => content.find(c => c.key === key)?.value;
 
@@ -52,7 +64,7 @@ export default async function PricingPage() {
                                         <p className="mt-4 text-muted font-medium">{plan.description}</p>
                                     </div>
                                     <div className="space-y-4 mb-10 flex-1">
-                                        {plan.features.split('\n').filter(f => f.trim()).map((feature, i) => (
+                                        {plan.features.split('\n').filter((f: string) => f.trim()).map((feature: string, i: number) => (
                                             <div key={i} className="flex items-start gap-3">
                                                 <div className="mt-1 w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
                                                     <Check size={12} className="text-primary" />

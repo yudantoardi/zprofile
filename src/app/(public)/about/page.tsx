@@ -5,13 +5,23 @@ import CTASection from "@/components/home/CTASection";
 import { Users, Globe, Smile } from "lucide-react";
 
 export default async function AboutPage() {
-    const content = await prisma.staticContent.findMany({
-        where: { page: 'about' }
-    });
+    let content: any[] = [];
+    let team: any[] = [];
 
-    const team = await prisma.teamMember.findMany({
-        orderBy: { order: 'asc' }
-    });
+    try {
+        content = await prisma.staticContent.findMany({
+            where: { page: 'about' }
+        });
+
+        team = await prisma.teamMember.findMany({
+            orderBy: { order: 'asc' }
+        });
+    } catch (error) {
+        // Handle database connection errors during build
+        console.warn('Database not available during build, using default values');
+        content = [];
+        team = [];
+    }
 
     const getContent = (key: string) => content.find(c => c.key === key)?.value;
 
