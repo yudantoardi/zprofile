@@ -21,7 +21,7 @@ export default async function PortfolioPage() {
         categories = await prisma.portfolioCategory.findMany({
             orderBy: { name: 'asc' }
         });
-    } catch (error) {
+    } catch {
         console.warn('Database not available during build, using default values');
     }
 

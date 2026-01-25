@@ -54,7 +54,7 @@ export default async function Home() {
       orderBy: { order: 'asc' },
       take: 5
     });
-  } catch (error) {
+  } catch {
     // Handle database connection errors during build
     console.warn('Database not available during build, using default values');
     content = [];

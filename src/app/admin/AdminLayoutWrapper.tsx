@@ -12,9 +12,8 @@ export default async function AdminLayout({
         if (process.env.DATABASE_URL) {
             unreadCount = await prisma.message.count({ where: { isRead: false } });
         }
-    } catch (error) {
-        console.error('Failed to fetch unread messages:', error);
-        // Continue with unreadCount = 0
+    } catch {
+        console.error('Failed to fetch unread messages');
     }
 
     return (

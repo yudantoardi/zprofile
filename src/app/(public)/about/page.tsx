@@ -16,7 +16,7 @@ export default async function AboutPage() {
         team = await prisma.teamMember.findMany({
             orderBy: { order: 'asc' }
         });
-    } catch (error) {
+    } catch {
         // Handle database connection errors during build
         console.warn('Database not available during build, using default values');
         content = [];

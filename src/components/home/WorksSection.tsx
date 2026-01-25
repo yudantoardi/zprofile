@@ -31,7 +31,6 @@ export default function WorksSection({
     subtitle,
     title,
     description,
-    ctaText,
     portfolios,
     categories
 }: WorksSectionProps) {

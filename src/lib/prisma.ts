@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production' && globalForPrisma.prisma) {
     // Check if we have the expected models, if not, reset the client
     const hasExpectedModels = 'siteSettings' in globalForPrisma.prisma && 'service' in globalForPrisma.prisma;
     if (!hasExpectedModels) {
-        // @ts-ignore
+        // @ts-expect-error: Resetting prisma client for schema changes
         globalForPrisma.prisma = undefined;
     }
 }
