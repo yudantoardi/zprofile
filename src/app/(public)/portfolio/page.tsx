@@ -4,18 +4,26 @@ import CTASection from "@/components/home/CTASection";
 import prisma from "@/lib/prisma";
 
 export default async function PortfolioPage() {
-    const content = await prisma.staticContent.findMany({
-        where: { page: 'portfolio' }
-    });
+    let content: any[] = [];
+    let portfolios: any[] = [];
+    let categories: any[] = [];
 
-    const portfolios = await prisma.portfolio.findMany({
-        orderBy: { order: 'asc' },
-        include: { Category: true }
-    });
+    try {
+        content = await prisma.staticContent.findMany({
+            where: { page: 'portfolio' }
+        });
 
-    const categories = await prisma.portfolioCategory.findMany({
-        orderBy: { name: 'asc' }
-    });
+        portfolios = await prisma.portfolio.findMany({
+            orderBy: { order: 'asc' },
+            include: { Category: true }
+        });
+
+        categories = await prisma.portfolioCategory.findMany({
+            orderBy: { name: 'asc' }
+        });
+    } catch (error) {
+        console.warn('Database not available during build, using default values');
+    }
 
     const getContent = (key: string) => content.find(c => c.key === key)?.value;
 

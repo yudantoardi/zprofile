@@ -4,13 +4,20 @@ import ServicesSection from "@/components/home/ServicesSection";
 import CTASection from "@/components/home/CTASection";
 
 export default async function ServicesPage() {
-    const content = await prisma.staticContent.findMany({
-        where: { page: 'services' }
-    });
+    let content: any[] = [];
+    let services: any[] = [];
 
-    const services = await prisma.service.findMany({
-        orderBy: { order: 'asc' }
-    });
+    try {
+        content = await prisma.staticContent.findMany({
+            where: { page: 'services' }
+        });
+
+        services = await prisma.service.findMany({
+            orderBy: { order: 'asc' }
+        });
+    } catch (error) {
+        console.warn('Database not available during build, using default values');
+    }
 
     const getContent = (key: string) => content.find(c => c.key === key)?.value;
 
