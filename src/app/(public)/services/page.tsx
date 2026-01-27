@@ -33,12 +33,12 @@ export default async function ServicesPage() {
     return (
         <>
             <PageHeader
-                title={getContent('services_page_title') || "Our Services"}
-                description={getContent('services_page_description') || "Comprehensive digital solutions designed to help your business thrive in the modern world."}
+                title={getContent('services_page_title') || "Tailored Solutions for Your Digital Needs"}
+                description={getContent('services_page_description') || "We offer a wide range of services to help you establish a strong digital presence and achieve your business goals."}
                 breadcrumbs={[{ name: 'Services', href: '/services' }]}
             />
 
-            <ServicesSection services={services} />
+            <ServicesSection services={services} hideHeader={true} />
 
             <section className="py-24 bg-white border-t border-border">
                 <div className="container-custom">

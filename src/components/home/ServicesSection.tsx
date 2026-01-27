@@ -25,13 +25,15 @@ interface ServicesSectionProps {
     title?: string;
     description?: string;
     services?: Service[];
+    hideHeader?: boolean;
 }
 
 export default function ServicesSection({
     subtitle,
     title,
     description,
-    services
+    services,
+    hideHeader = false
 }: ServicesSectionProps) {
     const [mounted, setMounted] = useState(false);
     const displayServices = services || [];
@@ -65,17 +67,19 @@ export default function ServicesSection({
     return (
         <section className="py-24 bg-secondary/30">
             <div className="container-custom">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <span className="text-primary font-bold text-sm uppercase tracking-widest block mb-4">
-                        {subtitle || 'Our Services'}
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6 tracking-tight">
-                        {title || 'Tailored Solutions for Your Digital Needs'}
-                    </h2>
-                    <p className="text-lg text-muted">
-                        {description || 'We offer a wide range of services to help you establish a strong digital presence and achieve your business goals.'}
-                    </p>
-                </div>
+                {!hideHeader && (
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <span className="text-primary font-bold text-sm uppercase tracking-widest block mb-4">
+                            {subtitle || 'Our Services'}
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6 tracking-tight">
+                            {title || 'Tailored Solutions for Your Digital Needs'}
+                        </h2>
+                        <p className="text-lg text-muted">
+                            {description || 'We offer a wide range of services to help you establish a strong digital presence and achieve your business goals.'}
+                        </p>
+                    </div>
+                )}
 
                 <div className="relative px-4 sm:px-12">
                     <Swiper
