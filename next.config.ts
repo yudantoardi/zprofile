@@ -21,9 +21,8 @@ const nextConfig: NextConfig = {
   compress: true,
 
   // Aggressive optimizations
-  experimental: {
-    optimizePackageImports: ['lucide-react'],
-  },
+  // Optimize package imports
+  // optimizePackageImports: ['lucide-react'],
 
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
