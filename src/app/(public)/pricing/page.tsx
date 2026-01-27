@@ -58,7 +58,7 @@ export default async function PricingPage() {
                                     <div className="mb-8">
                                         <h3 className="text-2xl font-heading font-bold text-foreground mb-4">{plan.name}</h3>
                                         <div className="flex items-baseline">
-                                            <span className="text-5xl font-heading font-bold text-foreground tracking-tight">{plan.price}</span>
+                                            <span className="text-3xl font-heading font-bold text-foreground tracking-tight">{plan.price}</span>
                                             <span className="text-muted ml-2 italic">/{plan.period}</span>
                                         </div>
                                         <p className="mt-4 text-muted font-medium">{plan.description}</p>
