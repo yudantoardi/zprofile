@@ -61,20 +61,19 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
             { key: 'about_page_title', label: 'Section Title', type: 'text', section: 'About Section' },
             { key: 'about_page_description', label: 'About Paragraph', type: 'textarea', section: 'About Section' },
             { key: 'about_page_image', label: 'Section Image', type: 'image', section: 'About Section' },
+            { key: 'team_section_title', label: 'Team Section Title', type: 'text', section: 'About Section' },
 
-            { key: 'counter_1_icon', label: 'Counter 1: Icon Name (Lucide)', type: 'text', section: 'Counter Section' },
-            { key: 'counter_1_title', label: 'Counter 1: Title', type: 'text', section: 'Counter Section' },
-            { key: 'counter_1_number', label: 'Counter 1: Number (e.g. 500+)', type: 'text', section: 'Counter Section' },
+            { key: 'counter_1_icon', label: 'Icon Name (Lucide)', type: 'text', section: 'Counter 1' },
+            { key: 'counter_1_title', label: 'Title', type: 'text', section: 'Counter 1' },
+            { key: 'counter_1_number', label: 'Number (e.g. 500+)', type: 'text', section: 'Counter 1' },
 
-            { key: 'counter_2_icon', label: 'Counter 2: Icon Name (Lucide)', type: 'text', section: 'Counter Section' },
-            { key: 'counter_2_title', label: 'Counter 2: Title', type: 'text', section: 'Counter Section' },
-            { key: 'counter_2_number', label: 'Counter 2: Number (e.g. 1,200+)', type: 'text', section: 'Counter Section' },
+            { key: 'counter_2_icon', label: 'Icon Name (Lucide)', type: 'text', section: 'Counter 2' },
+            { key: 'counter_2_title', label: 'Title', type: 'text', section: 'Counter 2' },
+            { key: 'counter_2_number', label: 'Number (e.g. 1,200+)', type: 'text', section: 'Counter 2' },
 
-            { key: 'counter_3_icon', label: 'Counter 3: Icon Name (Lucide)', type: 'text', section: 'Counter Section' },
-            { key: 'counter_3_title', label: 'Counter 3: Title', type: 'text', section: 'Counter Section' },
-            { key: 'counter_3_number', label: 'Counter 3: Number (e.g. 5M+)', type: 'text', section: 'Counter Section' },
-
-            { key: 'team_section_title', label: 'Team Section Title', type: 'text', section: 'Our Team Section' },
+            { key: 'counter_3_icon', label: 'Icon Name (Lucide)', type: 'text', section: 'Counter 3' },
+            { key: 'counter_3_title', label: 'Title', type: 'text', section: 'Counter 3' },
+            { key: 'counter_3_number', label: 'Number (e.g. 5M+)', type: 'text', section: 'Counter 3' },
         ]
     },
     services: {
@@ -84,16 +83,17 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
             { key: 'services_page_title', label: 'Page Title', type: 'text', section: 'Header Section' },
             { key: 'services_page_description', label: 'Page Description', type: 'textarea', section: 'Header Section' },
 
-            { key: 'services_delivers_title', label: 'Process Title', type: 'text', section: 'Process Section' },
-            { key: 'services_delivers_description', label: 'Process Description', type: 'textarea', section: 'Process Section' },
-            { key: 'services_step_1_title', label: 'Step 1: Title', type: 'text', section: 'Process Section' },
-            { key: 'services_step_1_desc', label: 'Step 1: Description', type: 'text', section: 'Process Section' },
-            { key: 'services_step_2_title', label: 'Step 2: Title', type: 'text', section: 'Process Section' },
-            { key: 'services_step_2_desc', label: 'Step 2: Description', type: 'text', section: 'Process Section' },
-            { key: 'services_step_3_title', label: 'Step 3: Title', type: 'text', section: 'Process Section' },
-            { key: 'services_step_3_desc', label: 'Step 3: Description', type: 'text', section: 'Process Section' },
-            { key: 'services_step_4_title', label: 'Step 4: Title', type: 'text', section: 'Process Section' },
-            { key: 'services_step_4_desc', label: 'Step 4: Description', type: 'text', section: 'Process Section' },
+            { key: 'services_delivers_title', label: 'Process Title', type: 'text', section: 'Process Config' },
+            { key: 'services_delivers_description', label: 'Process Description', type: 'textarea', section: 'Process Config' },
+
+            { key: 'services_step_1_title', label: 'Title', type: 'text', section: 'Process Step 1' },
+            { key: 'services_step_1_desc', label: 'Description', type: 'text', section: 'Process Step 1' },
+            { key: 'services_step_2_title', label: 'Title', type: 'text', section: 'Process Step 2' },
+            { key: 'services_step_2_desc', label: 'Description', type: 'text', section: 'Process Step 2' },
+            { key: 'services_step_3_title', label: 'Title', type: 'text', section: 'Process Step 3' },
+            { key: 'services_step_3_desc', label: 'Description', type: 'text', section: 'Process Step 3' },
+            { key: 'services_step_4_title', label: 'Title', type: 'text', section: 'Process Step 4' },
+            { key: 'services_step_4_desc', label: 'Description', type: 'text', section: 'Process Step 4' },
 
             { key: 'services_specialized_title', label: 'Specialized Title', type: 'text', section: 'Specialized Section' },
             { key: 'services_specialized_description', label: 'Specialized Description', type: 'textarea', section: 'Specialized Section' },
@@ -186,58 +186,59 @@ export default function ContentClient({ initialContent }: { initialContent: Stat
                 <form key={activeTab} onSubmit={handleSave} className="space-y-12">
                     <input type="hidden" name="page" value={activeTab} />
 
-                    {Object.entries(groupedFields).map(([sectionName, fields]) => (
-                        <div key={sectionName} className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                            <div className="flex items-center gap-4">
-                                <div className="p-2 bg-slate-100 rounded-lg text-primary">
-                                    <Layers size={18} />
+                    {Object.entries(groupedFields).map(([sectionName, fields]) => {
+                        const isCounterOrSimple = fields.every(f => f.type === 'text') && fields.length <= 3;
+
+                        return (
+                            <div key={sectionName} className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                                <div className="flex items-center gap-4">
+                                    <h3 className="text-lg font-heading font-bold text-foreground">{sectionName}</h3>
+                                    <div className="flex-1 h-px bg-slate-100" />
                                 </div>
-                                <h3 className="text-xl font-heading font-bold text-foreground">{sectionName}</h3>
-                                <div className="flex-1 h-px bg-slate-100" />
-                            </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 px-2 lg:px-6">
-                                {fields.map(field => (
-                                    <div key={field.key} className={field.type === 'textarea' || field.type === 'image' ? 'md:col-span-2' : ''}>
-                                        <label className="block text-sm font-bold text-foreground mb-3">{field.label}</label>
+                                <div className={`bg-slate-50/50 p-6 md:p-8 rounded-3xl border border-slate-100 grid grid-cols-1 ${isCounterOrSimple ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-6 lg:gap-8`}>
+                                    {fields.map(field => (
+                                        <div key={field.key} className={(!isCounterOrSimple && (field.type === 'textarea' || field.type === 'image')) ? 'md:col-span-2' : ''}>
+                                            <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-2">{field.label}</label>
 
-                                        {field.type === 'image' ? (
-                                            <div className="flex flex-col md:flex-row gap-6 items-start">
-                                                <div className="w-full md:w-64 aspect-video bg-slate-50 border-2 border-dashed border-border rounded-2xl overflow-hidden flex items-center justify-center relative group shadow-inner">
-                                                    {(previews[field.key] || getContentValue(activeTab, field.key)) ? (
-                                                        <img src={previews[field.key] || getContentValue(activeTab, field.key)} alt={field.label} className="w-full h-full object-cover" />
-                                                    ) : (
-                                                        <ImageIcon className="text-slate-200" size={48} />
-                                                    )}
+                                            {field.type === 'image' ? (
+                                                <div className="flex flex-col md:flex-row gap-6 items-start">
+                                                    <div className="w-full md:w-64 aspect-video bg-white border-2 border-dashed border-border rounded-xl overflow-hidden flex items-center justify-center relative group shadow-sm">
+                                                        {(previews[field.key] || getContentValue(activeTab, field.key)) ? (
+                                                            <img src={previews[field.key] || getContentValue(activeTab, field.key)} alt={field.label} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <ImageIcon className="text-slate-200" size={48} />
+                                                        )}
+                                                    </div>
+                                                    <div className="flex-1 space-y-3">
+                                                        <label className="btn-secondary inline-flex items-center gap-2 cursor-pointer py-2 px-5 text-sm hover:bg-white transition-colors">
+                                                            <Upload size={16} /> Upload Image
+                                                            <input type="file" name={field.key} accept="image/*" onChange={(e) => handleImageChange(field.key, e)} className="hidden" />
+                                                        </label>
+                                                        <p className="text-[10px] text-muted">Recommended: High resolution, WebP/JPG/PNG.</p>
+                                                    </div>
                                                 </div>
-                                                <div className="flex-1 space-y-3">
-                                                    <label className="btn-secondary inline-flex items-center gap-2 cursor-pointer py-3 px-6 hover:bg-slate-50 transition-colors">
-                                                        <Upload size={18} /> Upload Image
-                                                        <input type="file" name={field.key} accept="image/*" onChange={(e) => handleImageChange(field.key, e)} className="hidden" />
-                                                    </label>
-                                                    <p className="text-xs text-muted">Recommended: High resolution, WebP/JPG/PNG.</p>
-                                                </div>
-                                            </div>
-                                        ) : field.type === 'textarea' ? (
-                                            <textarea
-                                                name={field.key}
-                                                defaultValue={getContentValue(activeTab, field.key)}
-                                                rows={4}
-                                                className="w-full bg-slate-50 border border-border p-5 rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all hover:bg-slate-100/50"
-                                            />
-                                        ) : (
-                                            <input
-                                                type="text"
-                                                name={field.key}
-                                                defaultValue={getContentValue(activeTab, field.key)}
-                                                className="w-full bg-slate-50 border border-border p-5 rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all hover:bg-slate-100/50"
-                                            />
-                                        )}
-                                    </div>
-                                ))}
+                                            ) : field.type === 'textarea' ? (
+                                                <textarea
+                                                    name={field.key}
+                                                    defaultValue={getContentValue(activeTab, field.key)}
+                                                    rows={4}
+                                                    className="w-full bg-white border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all hover:border-primary/30"
+                                                />
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    name={field.key}
+                                                    defaultValue={getContentValue(activeTab, field.key)}
+                                                    className="w-full bg-white border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all hover:border-primary/30"
+                                                />
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                     <div className="pt-10 border-t border-border flex justify-end">
                         <button
