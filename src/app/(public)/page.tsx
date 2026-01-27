@@ -25,6 +25,7 @@ export default async function Home() {
         id: true,
         title: true,
         description: true,
+        icon: true,
       },
       orderBy: { order: 'asc' },
       take: 4

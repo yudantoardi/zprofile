@@ -33,7 +33,24 @@ export default function ServiceList({ services, onEdit, onDelete }: ServiceListP
                                     <div className="font-bold text-foreground text-sm">{item.title}</div>
                                     <div className="text-xs text-muted line-clamp-1">{item.description}</div>
                                 </td>
-                                <td className="px-8 py-6 text-sm text-muted">{item.icon || 'None'}</td>
+                                <td className="px-8 py-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
+                                            {(() => {
+                                                const rawName = (item.icon || '').trim();
+                                                const iconKeys = Object.keys(LucideIcons);
+                                                const match = iconKeys.find(
+                                                    key => key.toLowerCase() === rawName.toLowerCase()
+                                                ) as keyof typeof LucideIcons;
+                                                const IconComponent = match ? LucideIcons[match] : null;
+
+                                                // @ts-ignore
+                                                return IconComponent && typeof IconComponent !== 'string' ? <IconComponent size={20} className="text-primary" /> : <div className="text-[10px] font-bold text-muted">?</div>;
+                                            })()}
+                                        </div>
+                                        <span className="text-xs font-mono text-muted">{item.icon || 'None'}</span>
+                                    </div>
+                                </td>
                                 <td className="px-8 py-6 text-right space-x-2">
                                     <button
                                         onClick={() => onEdit(item)}

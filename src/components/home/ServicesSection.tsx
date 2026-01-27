@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import * as LucideIcons from 'lucide-react';
 import { ArrowRight, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,6 +9,7 @@ interface Service {
     id: string;
     title: string;
     description: string;
+    icon?: string | null;
 }
 
 interface ServicesSectionProps {
@@ -57,7 +59,29 @@ export default function ServicesSection({
                             >
                                 <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary group-hover:rotate-6 transition-all duration-300">
                                     <div className="group-hover:text-white group-hover:-rotate-6 transition-all duration-300">
-                                        <Briefcase size={32} />
+                                        {(() => {
+                                            // Handle potential case mismatches or spaces
+                                            const rawName = (service.icon || '').trim();
+                                            if (!rawName) return <Briefcase size={32} />;
+
+                                            // Find best match in LucideIcons keys
+                                            const iconKeys = Object.keys(LucideIcons);
+                                            const match = iconKeys.find(
+                                                key => key.toLowerCase() === rawName.toLowerCase()
+                                            ) as keyof typeof LucideIcons;
+
+                                            const IconComponent = match ? LucideIcons[match] : LucideIcons.Briefcase;
+
+                                            // Ensure it's a valid component
+                                            const isValid = typeof IconComponent === 'function' || (typeof IconComponent === 'object' && ('render' in IconComponent || '$$typeof' in (IconComponent as any)));
+
+                                            if (isValid) {
+                                                // @ts-ignore
+                                                return <IconComponent size={32} />;
+                                            }
+
+                                            return <Briefcase size={32} />;
+                                        })()}
                                     </div>
                                 </div>
                                 <h3 className="text-xl font-heading font-bold text-foreground mb-4 group-hover:text-primary transition-colors">

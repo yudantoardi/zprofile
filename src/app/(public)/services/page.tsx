@@ -15,7 +15,13 @@ export default async function ServicesPage() {
         });
 
         services = await prisma.service.findMany({
-            orderBy: { order: 'asc' }
+            orderBy: { order: 'asc' },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                icon: true,
+            }
         });
     } catch {
         console.warn('Database not available during build, using default values');
