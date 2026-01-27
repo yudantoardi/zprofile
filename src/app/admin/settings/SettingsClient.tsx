@@ -5,6 +5,7 @@ import { Globe, Save, Mail, Phone, MapPin, Instagram, Linkedin, Bookmark, Dribbb
 import { saveSettings } from "./actions";
 import LogoUploader from "./LogoUploader";
 import { useToast } from "@/components/Toast";
+import { upload } from "@vercel/blob/client";
 
 interface SettingsClientProps {
     settings: {
@@ -23,16 +24,37 @@ interface SettingsClientProps {
 export default function SettingsClient({ settings }: SettingsClientProps) {
     const { showToast, ToastComponent } = useToast();
     const [isSaving, setIsSaving] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSaving(true);
+        setUploadProgress(0);
 
-        const formData = new FormData(e.currentTarget);
-        await saveSettings(formData);
+        try {
+            const formData = new FormData(e.currentTarget);
+            const logoFile = formData.get('logoFile') as File;
 
-        setIsSaving(false);
-        showToast('Settings saved successfully!', 'success');
+            if (logoFile && logoFile.size > 0) {
+                const blob = await upload(logoFile.name, logoFile, {
+                    access: 'public',
+                    handleUploadUrl: '/api/upload',
+                    onUploadProgress: (progress) => {
+                        setUploadProgress(progress.percentage);
+                    },
+                });
+                formData.set('logoUrl', blob.url);
+            }
+
+            await saveSettings(formData);
+            showToast('Settings saved successfully!', 'success');
+        } catch (error) {
+            console.error(error);
+            showToast('Failed to save settings', 'error');
+        } finally {
+            setIsSaving(false);
+            setUploadProgress(0);
+        }
     };
 
     return (
@@ -117,7 +139,12 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
                             disabled={isSaving}
                             className="btn-primary w-full py-5 flex items-center justify-center gap-2 disabled:opacity-50"
                         >
-                            <Save size={20} /> {isSaving ? 'Saving...' : 'Save Changes'}
+                            <Save size={20} />
+                            {isSaving ? (
+                                uploadProgress > 0 && uploadProgress < 100
+                                    ? `Uploading Logo ${uploadProgress}%...`
+                                    : 'Saving...'
+                            ) : 'Save Changes'}
                         </button>
                     </div>
                 </div>

@@ -13,12 +13,13 @@ export async function saveSettings(formData: FormData) {
     const linkedin = formData.get('linkedin') as string;
     const behance = formData.get('behance') as string;
     const dribbble = formData.get('dribbble') as string;
-    const logoFile = formData.get('logoFile') as File;
+    const logoUrl = formData.get('logoUrl') as string;
 
-    let logo: string | undefined;
-    if (logoFile && logoFile.size > 0) {
-        logo = await uploadFile(logoFile);
-    }
+    // Logo is now uploaded client-side, so we just get the URL
+    // If logoUrl is present (not empty), we use it. 
+    // If it's empty/null, we might want to keep existing or allow clearing?
+    // The previous logic was: if (logoFile && logoFile.size > 0) -> update.
+    // So if logoUrl is provided, we update it.
 
     await prisma.siteSettings.upsert({
         where: { id: 'singleton' },
@@ -31,7 +32,7 @@ export async function saveSettings(formData: FormData) {
             linkedin,
             behance,
             dribbble,
-            ...(logo ? { logo } : {})
+            ...(logoUrl ? { logo: logoUrl } : {})
         },
         create: {
             id: 'singleton',
@@ -43,7 +44,7 @@ export async function saveSettings(formData: FormData) {
             linkedin,
             behance,
             dribbble,
-            logo: logo || ''
+            logo: logoUrl || ''
         }
     });
 
