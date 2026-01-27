@@ -9,6 +9,7 @@ interface AboutSectionProps {
     description?: string;
     ctaText?: string;
     image?: string;
+    points?: string;
 }
 
 export default function AboutSection({
@@ -16,8 +17,25 @@ export default function AboutSection({
     title,
     description,
     ctaText,
-    image
+    image,
+    points
 }: AboutSectionProps) {
+    // Parse points from JSON string or use default
+    let pointsList: string[] = [];
+    if (points) {
+        try {
+            const parsed = JSON.parse(points);
+            pointsList = Array.isArray(parsed) ? parsed : [];
+        } catch {
+            pointsList = [];
+        }
+    }
+
+    // Fallback to default if no points provided
+    if (pointsList.length === 0) {
+        pointsList = ['Innovative Design', 'Technical Excellence', 'Customer Centric', 'Scalable Solutions'];
+    }
+
     return (
         <section className="py-24 bg-white">
             <div className="container-custom">
@@ -64,7 +82,7 @@ export default function AboutSection({
                             {description || "We are a team of passionate designers, developers, and thinkers dedicated to creating meaningful digital experiences. We believe that every business has a unique story to tell, and we're here to help you tell yours in the most impactful way possible."}
                         </p>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {['Innovative Design', 'Technical Excellence', 'Customer Centric', 'Scalable Solutions'].map((item) => (
+                            {pointsList.map((item) => (
                                 <li key={item} className="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-border">
                                     <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
                                         <div className="w-2 h-2 bg-primary rounded-full" />

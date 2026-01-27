@@ -68,6 +68,7 @@ export default async function AboutPage() {
                 title={getContent('about_page_title') || "We're On Mission to Help Business Grow Faster"}
                 description={getContent('about_page_description') || "We are a team of passionate designers, developers, and thinkers dedicated to creating meaningful digital experiences."}
                 image={getContent('about_page_image')}
+                points={getContent('about_page_points')}
                 ctaText="Learn More"
             />
 

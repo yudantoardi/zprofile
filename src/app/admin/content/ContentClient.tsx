@@ -10,7 +10,7 @@ type PageKey = 'homepage' | 'about' | 'services' | 'portfolio' | 'pricing';
 interface FieldConfig {
     key: string;
     label: string;
-    type: 'text' | 'textarea' | 'image';
+    type: 'text' | 'textarea' | 'image' | 'list';
     section?: string;
 }
 
@@ -29,6 +29,7 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
             { key: 'about_subtitle', label: 'About Section: Subtitle', type: 'text', section: 'About Section' },
             { key: 'about_title', label: 'About Section: Title', type: 'text', section: 'About Section' },
             { key: 'about_description', label: 'About Section: Description', type: 'textarea', section: 'About Section' },
+            { key: 'about_points', label: 'About Section: Bullet Points', type: 'list', section: 'About Section' },
             { key: 'about_cta_text', label: 'About Section: Read More Text', type: 'text', section: 'About Section' },
             { key: 'about_image', label: 'About Section: Image', type: 'image', section: 'About Section' },
 
@@ -60,6 +61,7 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
             { key: 'about_page_subtitle', label: 'Section Subtitle', type: 'text', section: 'About Section' },
             { key: 'about_page_title', label: 'Section Title', type: 'text', section: 'About Section' },
             { key: 'about_page_description', label: 'About Paragraph', type: 'textarea', section: 'About Section' },
+            { key: 'about_page_points', label: 'Bullet Points', type: 'list', section: 'About Section' },
             { key: 'about_page_image', label: 'Section Image', type: 'image', section: 'About Section' },
             { key: 'team_section_title', label: 'Team Section Title', type: 'text', section: 'About Section' },
 
@@ -121,9 +123,41 @@ export default function ContentClient({ initialContent }: { initialContent: Stat
     const [activeTab, setActiveTab] = useState<PageKey>('homepage');
     const [isSaving, setIsSaving] = useState(false);
     const [previews, setPreviews] = useState<Record<string, string>>({});
+    const [listItems, setListItems] = useState<Record<string, string[]>>({});
 
     const getContentValue = (page: string, key: string) => {
         return initialContent.find(c => c.page === page && c.key === key)?.value || '';
+    };
+
+    const getListValue = (key: string): string[] => {
+        if (listItems[key]) return listItems[key];
+        const value = getContentValue(activeTab, key);
+        if (!value) return [''];
+        try {
+            const parsed = JSON.parse(value);
+            return Array.isArray(parsed) && parsed.length > 0 ? parsed : [''];
+        } catch {
+            return [''];
+        }
+    };
+
+    const updateListItem = (key: string, index: number, value: string) => {
+        const current = getListValue(key);
+        const updated = [...current];
+        updated[index] = value;
+        setListItems(prev => ({ ...prev, [key]: updated }));
+    };
+
+    const addListItem = (key: string) => {
+        const current = getListValue(key);
+        setListItems(prev => ({ ...prev, [key]: [...current, ''] }));
+    };
+
+    const removeListItem = (key: string, index: number) => {
+        const current = getListValue(key);
+        if (current.length <= 1) return; // Keep at least one item
+        const updated = current.filter((_, i) => i !== index);
+        setListItems(prev => ({ ...prev, [key]: updated }));
     };
 
     const handleImageChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,6 +175,15 @@ export default function ContentClient({ initialContent }: { initialContent: Stat
         e.preventDefault();
         setIsSaving(true);
         const formData = new FormData(e.currentTarget);
+
+        // Process list fields - convert arrays to JSON strings
+        Object.keys(listItems).forEach(key => {
+            const items = listItems[key].filter(item => item.trim() !== '');
+            if (items.length > 0) {
+                formData.set(key, JSON.stringify(items));
+            }
+        });
+
         await saveStaticContent(formData);
         setIsSaving(false);
         alert('Content saved successfully!');
@@ -225,6 +268,42 @@ export default function ContentClient({ initialContent }: { initialContent: Stat
                                                     rows={4}
                                                     className="w-full bg-white border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all hover:border-primary/30"
                                                 />
+                                            ) : field.type === 'list' ? (
+                                                <div className="space-y-3">
+                                                    {getListValue(field.key).map((item, index) => (
+                                                        <div key={index} className="flex gap-2">
+                                                            <input
+                                                                type="text"
+                                                                value={item}
+                                                                onChange={(e) => updateListItem(field.key, index, e.target.value)}
+                                                                placeholder={`Item ${index + 1}`}
+                                                                className="flex-1 bg-white border border-border p-3 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all hover:border-primary/30"
+                                                            />
+                                                            {getListValue(field.key).length > 1 && (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => removeListItem(field.key, index)}
+                                                                    className="px-3 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors"
+                                                                    title="Remove item"
+                                                                >
+                                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                    </svg>
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    ))}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => addListItem(field.key)}
+                                                        className="w-full py-3 px-4 bg-primary/5 text-primary rounded-xl hover:bg-primary/10 transition-colors flex items-center justify-center gap-2 font-semibold text-sm"
+                                                    >
+                                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                                        </svg>
+                                                        Add Item
+                                                    </button>
+                                                </div>
                                             ) : (
                                                 <input
                                                     type="text"

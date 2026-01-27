@@ -83,6 +83,7 @@ export default async function Home() {
         description={getContent('about_description')}
         ctaText={getContent('about_cta_text')}
         image={getContent('about_image')}
+        points={getContent('about_points')}
       />
       <ServicesSection
         subtitle={getContent('services_subtitle')}
