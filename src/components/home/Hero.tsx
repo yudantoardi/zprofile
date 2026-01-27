@@ -26,11 +26,11 @@ export default function Hero({
             {/* Background Decorative Elements or Image */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
 
-            {bgImage && (
+            {/* {bgImage && (
                 <div className="absolute right-0 top-0 w-1/2 h-full opacity-10 pointer-events-none hidden lg:block">
                     <img src={bgImage} alt="" className="w-full h-full object-cover" />
                 </div>
-            )}
+            )} */}
 
             <div className="max-w-7xl w-full mx-auto relative z-10 py-20 lg:py-32">
                 <div className="max-w-4xl">
