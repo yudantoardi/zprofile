@@ -42,6 +42,7 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
                 const blob = await upload(logoFile.name, logoFile, {
                     access: 'public',
                     handleUploadUrl: '/api/upload',
+                    addRandomSuffix: true,
                     onUploadProgress: (progress) => {
                         setUploadProgress(progress.percentage);
                     },
@@ -53,6 +54,7 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
                 const blob = await upload(faviconFile.name, faviconFile, {
                     access: 'public',
                     handleUploadUrl: '/api/upload',
+                    addRandomSuffix: true,
                 });
                 formData.set('faviconUrl', blob.url);
             }
