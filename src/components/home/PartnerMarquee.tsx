@@ -9,11 +9,15 @@ export default function PartnerMarquee({ partners }: { partners: PartnerLogo[] }
     const displayPartners = [...partners, ...partners, ...partners];
 
     return (
-        <div className="flex overflow-hidden relative group">
-            <div className="flex gap-16 animate-marquee whitespace-nowrap py-4">
+        <div className="flex overflow-hidden relative group py-8">
+            {/* Left & Right Faded Edges */}
+            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+            <div className="flex gap-16 animate-marquee whitespace-nowrap min-w-full items-center">
                 {displayPartners.map((partner, index) => (
-                    <div key={`${partner.id}-${index}`} className="flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300 w-32 shrink-0 h-12">
-                        <img src={partner.image} alt={partner.name || 'Client'} className="h-full w-full object-contain" />
+                    <div key={`${partner.id}-${index}`} className="flex items-center justify-center grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 w-32 shrink-0 h-10 px-4">
+                        <img src={partner.image} alt={partner.name || 'Partner'} className="h-full w-full object-contain" />
                     </div>
                 ))}
             </div>
@@ -24,7 +28,8 @@ export default function PartnerMarquee({ partners }: { partners: PartnerLogo[] }
                     100% { transform: translateX(-33.33%); }
                 }
                 .animate-marquee {
-                    animation: marquee 30s linear infinite;
+                    animation: marquee 40s linear infinite;
+                    will-change: transform;
                 }
                 .group:hover .animate-marquee {
                     animation-play-state: paused;

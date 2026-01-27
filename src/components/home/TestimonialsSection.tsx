@@ -1,7 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 interface Testimonial {
     id: string;
@@ -25,7 +33,32 @@ export default function TestimonialsSection({
     description,
     testimonials
 }: TestimonialsSectionProps) {
+    const [mounted, setMounted] = useState(false);
     const displayTestimonials = testimonials || [];
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return (
+            <section className="py-24 bg-secondary/30 relative overflow-hidden">
+                <div className="container-custom relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div>
+                            <span className="text-primary font-bold text-sm uppercase tracking-widest block mb-4">
+                                {subtitle || 'Testimonials'}
+                            </span>
+                            <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-8 tracking-tight">
+                                {title || 'What Our Clients Say About Us'}
+                            </h2>
+                        </div>
+                        <div className="h-64 bg-white/50 rounded-[2.5rem] animate-pulse"></div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className="py-24 bg-secondary/30 relative overflow-hidden">
@@ -57,47 +90,83 @@ export default function TestimonialsSection({
                         </div>
                     </div>
 
-                    <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-                        {displayTestimonials.length === 0 ? (
-                            <div className="bg-white p-10 rounded-[2.5rem] border border-border text-center text-muted italic">
-                                No testimonials to show yet.
-                            </div>
-                        ) : (
-                            displayTestimonials.map((item, index) => (
-                                <motion.div
-                                    key={item.id}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-border relative hover:shadow-xl transition-all group"
-                                >
-                                    <div className="flex gap-1 mb-6">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={16} className={i < item.rating ? "text-yellow-400 fill-yellow-400" : "text-slate-200"} />
-                                        ))}
+                    <div className="relative group">
+                        <Swiper
+                            modules={[Navigation, Autoplay, Pagination]}
+                            spaceBetween={30}
+                            slidesPerView={1}
+                            navigation={{
+                                prevEl: '.testimonials-prev',
+                                nextEl: '.testimonials-next',
+                            }}
+                            pagination={{
+                                clickable: true,
+                                el: '.testimonials-pagination',
+                                dynamicBullets: true
+                            }}
+                            autoplay={{
+                                delay: 6000,
+                                disableOnInteraction: false,
+                            }}
+                            className="!pb-16"
+                        >
+                            {displayTestimonials.length === 0 ? (
+                                <SwiperSlide>
+                                    <div className="bg-white p-10 rounded-[2.5rem] border border-border text-center text-muted italic">
+                                        No testimonials to show yet.
                                     </div>
-                                    <p className="text-lg text-foreground leading-relaxed italic mb-8 group-hover:text-primary transition-colors">
-                                        &ldquo;{item.content}&rdquo;
-                                    </p>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-14 h-14 bg-slate-100 rounded-full overflow-hidden border-2 border-primary/20 p-1">
-                                            {item.image ? (
-                                                <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded-full" />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center font-bold text-primary bg-white rounded-full">
-                                                    {item.name.charAt(0)}
+                                </SwiperSlide>
+                            ) : (
+                                displayTestimonials.map((item, index) => (
+                                    <SwiperSlide key={item.id} className="h-auto">
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 20 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                                            className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-border relative hover:shadow-xl transition-all group h-full flex flex-col"
+                                        >
+                                            <div className="flex gap-1 mb-6">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star key={i} size={16} className={i < item.rating ? "text-yellow-400 fill-yellow-400" : "text-slate-200"} />
+                                                ))}
+                                            </div>
+                                            <p className="text-lg text-foreground leading-relaxed italic mb-8 group-hover:text-primary transition-colors flex-1">
+                                                &ldquo;{item.content}&rdquo;
+                                            </p>
+                                            <div className="flex items-center gap-4 mt-auto">
+                                                <div className="w-14 h-14 bg-slate-100 rounded-full overflow-hidden border-2 border-primary/20 p-1">
+                                                    {item.image ? (
+                                                        <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded-full" />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center font-bold text-primary bg-white rounded-full">
+                                                            {item.name.charAt(0)}
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
-                                        </div>
-                                        <div>
-                                            <h4 className="font-heading font-bold text-foreground">{item.name}</h4>
-                                            <p className="text-sm text-muted font-medium">{item.role}</p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))
-                        )}
+                                                <div>
+                                                    <h4 className="font-heading font-bold text-foreground">{item.name}</h4>
+                                                    <p className="text-sm text-muted font-medium">{item.role}</p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    </SwiperSlide>
+                                ))
+                            )}
+                        </Swiper>
+
+                        {/* Navigation Buttons */}
+                        <div className="absolute -bottom-4 left-0 right-0 flex justify-center gap-4 z-20">
+                            <button className="testimonials-prev w-12 h-12 bg-white rounded-full border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all disabled:opacity-0">
+                                <ChevronLeft size={24} />
+                            </button>
+                            <button className="testimonials-next w-12 h-12 bg-white rounded-full border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all disabled:opacity-0">
+                                <ChevronRight size={24} />
+                            </button>
+                        </div>
+
+                        {/* Pagination container */}
+                        <div className="testimonials-pagination mt-8 flex justify-center"></div>
                     </div>
                 </div>
             </div>

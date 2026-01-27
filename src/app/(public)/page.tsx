@@ -28,7 +28,6 @@ export default async function Home() {
         icon: true,
       },
       orderBy: { order: 'asc' },
-      take: 4
     });
 
     portfolios = await prisma.portfolio.findMany({
@@ -78,10 +77,6 @@ export default async function Home() {
         ctaLink={getContent('hero_cta_link')}
         bgImage={getContent('hero_bg_image')}
       />
-      <PartnersSection
-        subtitle={getContent('partners_subtitle')}
-        title={getContent('partners_title')}
-      />
       <AboutSection
         subtitle={getContent('about_subtitle')}
         title={getContent('about_title')}
@@ -101,6 +96,10 @@ export default async function Home() {
         description={getContent('works_description')}
         ctaText={getContent('works_cta_text')}
         portfolios={portfolios}
+      />
+      <PartnersSection
+        subtitle={getContent('partners_subtitle')}
+        title={getContent('partners_title')}
       />
       <TestimonialsSection
         subtitle={getContent('testimonials_subtitle')}
