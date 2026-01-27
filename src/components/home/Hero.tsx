@@ -63,9 +63,9 @@ export default function Hero({
             </div>
 
             <motion.div
-                className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[40%] pr-20"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
+                className="hidden lg:block absolute right-0 top-1/2 w-[40%] pr-20"
+                initial={{ opacity: 0, x: 50, y: "-50%" }}
+                animate={{ opacity: 1, x: 0, y: "-50%" }}
                 transition={{ duration: 0.8, delay: 0.2 }}
             >
                 <div className="aspect-square bg-white rounded-[3rem] shadow-2xl relative overflow-hidden border border-border p-4 group">
