@@ -6,7 +6,7 @@ import { ArrowRight, Briefcase, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -77,19 +77,14 @@ export default function ServicesSection({
                     </p>
                 </div>
 
-                <div className="relative px-4 sm:px-12 group">
+                <div className="relative px-4 sm:px-12">
                     <Swiper
-                        modules={[Navigation, Autoplay, Pagination]}
+                        modules={[Navigation, Autoplay]}
                         spaceBetween={30}
                         slidesPerView={1.2}
                         navigation={{
                             prevEl: '.services-prev',
                             nextEl: '.services-next',
-                        }}
-                        pagination={{
-                            clickable: true,
-                            el: '.services-pagination',
-                            dynamicBullets: true
                         }}
                         autoplay={{
                             delay: 5000,
@@ -168,8 +163,7 @@ export default function ServicesSection({
                         <ChevronRight size={24} />
                     </button>
 
-                    {/* Pagination */}
-                    <div className="services-pagination flex justify-center mt-4"></div>
+
                 </div>
             </div>
         </section>

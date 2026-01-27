@@ -28,7 +28,7 @@ export default function PartnerMarquee({ partners }: { partners: PartnerLogo[] }
                     100% { transform: translateX(-33.33%); }
                 }
                 .animate-marquee {
-                    animation: marquee 40s linear infinite;
+                    animation: marquee 20s linear infinite;
                     will-change: transform;
                 }
                 .group:hover .animate-marquee {

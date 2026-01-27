@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -90,19 +90,14 @@ export default function TestimonialsSection({
                         </div>
                     </div>
 
-                    <div className="relative group">
+                    <div className="relative">
                         <Swiper
-                            modules={[Navigation, Autoplay, Pagination]}
+                            modules={[Navigation, Autoplay]}
                             spaceBetween={30}
                             slidesPerView={1}
                             navigation={{
                                 prevEl: '.testimonials-prev',
                                 nextEl: '.testimonials-next',
-                            }}
-                            pagination={{
-                                clickable: true,
-                                el: '.testimonials-pagination',
-                                dynamicBullets: true
                             }}
                             autoplay={{
                                 delay: 6000,
@@ -165,8 +160,7 @@ export default function TestimonialsSection({
                             </button>
                         </div>
 
-                        {/* Pagination container */}
-                        <div className="testimonials-pagination mt-8 flex justify-center"></div>
+
                     </div>
                 </div>
             </div>
