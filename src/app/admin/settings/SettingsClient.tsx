@@ -48,9 +48,9 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
 
             await saveSettings(formData);
             showToast('Settings saved successfully!', 'success');
-        } catch (error) {
-            console.error(error);
-            showToast('Failed to save settings', 'error');
+        } catch (error: any) {
+            console.error('Upload/Save Error:', error);
+            showToast(`Failed: ${error.message || 'Unknown error'}`, 'error');
         } finally {
             setIsSaving(false);
             setUploadProgress(0);
