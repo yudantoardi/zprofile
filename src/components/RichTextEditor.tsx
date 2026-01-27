@@ -1,11 +1,10 @@
-'use client';
-
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
-import { Bold, Italic, List, ListOrdered, Link as LinkIcon, Image as ImageIcon, Heading1, Heading2, Undo, Redo } from 'lucide-react';
-import { useEffect } from 'react';
+import { Bold, Italic, List, ListOrdered, Link as LinkIcon, Image as ImageIcon, Heading1, Heading2, Undo, Redo, Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { upload } from '@vercel/blob/client';
 
 interface RichTextEditorProps {
     content: string;
@@ -14,6 +13,8 @@ interface RichTextEditorProps {
 }
 
 export default function RichTextEditor({ content, onChange, placeholder }: RichTextEditorProps) {
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -58,22 +59,31 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
         }
     };
 
-    const addImage = () => {
+    const addImage = async () => {
         // Create a hidden file input
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
 
-        input.onchange = (e) => {
+        input.onchange = async (e) => {
             const file = (e.target as HTMLInputElement).files?.[0];
             if (file) {
-                // Convert to base64
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const base64String = reader.result as string;
-                    editor.chain().focus().setImage({ src: base64String }).run();
-                };
-                reader.readAsDataURL(file);
+                setIsUploadingImage(true);
+                try {
+                    // Upload to Vercel Blob
+                    const blob = await upload(file.name, file, {
+                        access: 'public',
+                        handleUploadUrl: '/api/upload',
+                    });
+
+                    // Insert image with URL
+                    editor.chain().focus().setImage({ src: blob.url }).run();
+                } catch (error) {
+                    console.error('Image upload failed:', error);
+                    alert('Failed to upload image. Please try again.');
+                } finally {
+                    setIsUploadingImage(false);
+                }
             }
         };
 
@@ -145,10 +155,11 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
                 <button
                     type="button"
                     onClick={addImage}
-                    className="p-2 rounded hover:bg-slate-200 transition-colors"
-                    title="Add Image"
+                    disabled={isUploadingImage}
+                    className={`p-2 rounded hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${isUploadingImage ? 'bg-primary/10' : ''}`}
+                    title={isUploadingImage ? "Uploading image..." : "Add Image"}
                 >
-                    <ImageIcon size={16} />
+                    {isUploadingImage ? <Loader2 size={16} className="animate-spin text-primary" /> : <ImageIcon size={16} />}
                 </button>
                 <div className="w-px bg-border mx-1" />
                 <button
