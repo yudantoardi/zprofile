@@ -2,7 +2,8 @@ import prisma from "@/lib/prisma";
 import PageHeader from "@/components/PageHeader";
 import AboutSection from "@/components/home/AboutSection";
 import CTASection from "@/components/home/CTASection";
-import { Users, Globe, Smile } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { Smile, Globe, Users } from "lucide-react";
 
 export default async function AboutPage() {
     let content: any[] = [];
@@ -25,10 +26,33 @@ export default async function AboutPage() {
 
     const getContent = (key: string) => content.find(c => c.key === key)?.value;
 
+    const getCounter = (index: number, defaultLabel: string, defaultValue: string, DefaultIcon: any) => {
+        const title = getContent(`counter_${index}_title`);
+        const value = getContent(`counter_${index}_number`);
+        const iconName = (getContent(`counter_${index}_icon`) || '').trim();
+
+        let IconComponent = DefaultIcon;
+        if (iconName) {
+            const iconKeys = Object.keys(LucideIcons);
+            const match = iconKeys.find(
+                key => key.toLowerCase() === iconName.toLowerCase()
+            ) as keyof typeof LucideIcons;
+            if (match && typeof LucideIcons[match] !== 'string') {
+                IconComponent = LucideIcons[match];
+            }
+        }
+
+        return {
+            label: title || defaultLabel,
+            value: value || defaultValue,
+            icon: <IconComponent className="text-primary" size={24} />
+        };
+    };
+
     const stats = [
-        { label: 'Happy Clients', value: getContent('counter_clients') || '500+', icon: <Smile className="text-primary" size={24} /> },
-        { label: 'Websites Built', value: getContent('counter_projects') || '1,200+', icon: <Globe className="text-primary" size={24} /> },
-        { label: 'Total Visitors', value: getContent('counter_visitors') || '5M+', icon: <Users className="text-primary" size={24} /> },
+        getCounter(1, 'Happy Clients', '500+', Smile),
+        getCounter(2, 'Websites Built', '1,200+', Globe),
+        getCounter(3, 'Total Visitors', '5M+', Users),
     ];
 
     return (

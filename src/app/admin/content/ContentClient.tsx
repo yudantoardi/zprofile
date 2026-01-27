@@ -62,9 +62,17 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
             { key: 'about_page_description', label: 'About Paragraph', type: 'textarea', section: 'About Section' },
             { key: 'about_page_image', label: 'Section Image', type: 'image', section: 'About Section' },
 
-            { key: 'counter_clients', label: 'Happy Clients count', type: 'text', section: 'Counter Section' },
-            { key: 'counter_projects', label: 'Websites Built count', type: 'text', section: 'Counter Section' },
-            { key: 'counter_visitors', label: 'Total Visitors count (e.g. 5M+)', type: 'text', section: 'Counter Section' },
+            { key: 'counter_1_icon', label: 'Counter 1: Icon Name (Lucide)', type: 'text', section: 'Counter Section' },
+            { key: 'counter_1_title', label: 'Counter 1: Title', type: 'text', section: 'Counter Section' },
+            { key: 'counter_1_number', label: 'Counter 1: Number (e.g. 500+)', type: 'text', section: 'Counter Section' },
+
+            { key: 'counter_2_icon', label: 'Counter 2: Icon Name (Lucide)', type: 'text', section: 'Counter Section' },
+            { key: 'counter_2_title', label: 'Counter 2: Title', type: 'text', section: 'Counter Section' },
+            { key: 'counter_2_number', label: 'Counter 2: Number (e.g. 1,200+)', type: 'text', section: 'Counter Section' },
+
+            { key: 'counter_3_icon', label: 'Counter 3: Icon Name (Lucide)', type: 'text', section: 'Counter Section' },
+            { key: 'counter_3_title', label: 'Counter 3: Title', type: 'text', section: 'Counter Section' },
+            { key: 'counter_3_number', label: 'Counter 3: Number (e.g. 5M+)', type: 'text', section: 'Counter Section' },
 
             { key: 'team_section_title', label: 'Team Section Title', type: 'text', section: 'Our Team Section' },
         ]
@@ -73,8 +81,22 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
         label: 'Services Page',
         icon: Briefcase,
         fields: [
-            { key: 'services_page_title', label: 'Page Title', type: 'text' },
-            { key: 'services_page_description', label: 'Page Description', type: 'textarea' },
+            { key: 'services_page_title', label: 'Page Title', type: 'text', section: 'Header Section' },
+            { key: 'services_page_description', label: 'Page Description', type: 'textarea', section: 'Header Section' },
+
+            { key: 'services_delivers_title', label: 'Process Title', type: 'text', section: 'Process Section' },
+            { key: 'services_delivers_description', label: 'Process Description', type: 'textarea', section: 'Process Section' },
+            { key: 'services_step_1_title', label: 'Step 1: Title', type: 'text', section: 'Process Section' },
+            { key: 'services_step_1_desc', label: 'Step 1: Description', type: 'text', section: 'Process Section' },
+            { key: 'services_step_2_title', label: 'Step 2: Title', type: 'text', section: 'Process Section' },
+            { key: 'services_step_2_desc', label: 'Step 2: Description', type: 'text', section: 'Process Section' },
+            { key: 'services_step_3_title', label: 'Step 3: Title', type: 'text', section: 'Process Section' },
+            { key: 'services_step_3_desc', label: 'Step 3: Description', type: 'text', section: 'Process Section' },
+            { key: 'services_step_4_title', label: 'Step 4: Title', type: 'text', section: 'Process Section' },
+            { key: 'services_step_4_desc', label: 'Step 4: Description', type: 'text', section: 'Process Section' },
+
+            { key: 'services_specialized_title', label: 'Specialized Title', type: 'text', section: 'Specialized Section' },
+            { key: 'services_specialized_description', label: 'Specialized Description', type: 'textarea', section: 'Specialized Section' },
         ]
     },
     portfolio: {
