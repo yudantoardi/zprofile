@@ -38,7 +38,6 @@ export default async function PortfolioDetailPage({ params }: { params: Promise<
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
                         {/* Main Content */}
                         <div className="lg:col-span-2 prose prose-lg prose-slate max-w-none [&_p]:min-h-[10px] [&_p]:mb-[10px]">
-                            <h2 className="text-3xl font-heading font-bold text-foreground mb-6">The Challenge</h2>
                             <div dangerouslySetInnerHTML={{ __html: displayData.content || '' }} />
                         </div>
 
