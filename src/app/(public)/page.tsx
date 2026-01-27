@@ -7,6 +7,8 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 import prisma from "@/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   let content: any[] = [];
   let services: any[] = [];

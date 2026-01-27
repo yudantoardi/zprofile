@@ -23,7 +23,6 @@ const nextConfig: NextConfig = {
   // Aggressive optimizations
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    optimizeCss: false,
   },
 
   // Webpack optimizations

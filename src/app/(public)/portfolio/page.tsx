@@ -3,6 +3,8 @@ import WorksSection from "@/components/home/WorksSection";
 import CTASection from "@/components/home/CTASection";
 import prisma from "@/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 export default async function PortfolioPage() {
     let content: any[] = [];
     let portfolios: any[] = [];

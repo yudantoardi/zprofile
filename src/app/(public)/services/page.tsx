@@ -3,6 +3,8 @@ import PageHeader from "@/components/PageHeader";
 import ServicesSection from "@/components/home/ServicesSection";
 import CTASection from "@/components/home/CTASection";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ServicesPage() {
     let content: any[] = [];
     let services: any[] = [];

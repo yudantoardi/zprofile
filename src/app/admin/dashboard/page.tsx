@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma";
 import Link from 'next/link';
 import { MessageSquare, Users, Briefcase, Eye } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboard() {
     // Fetch data with error handling
     let messageCount = 0;
