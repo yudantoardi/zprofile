@@ -42,7 +42,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         {/* Main Content */}
                         <div className="lg:col-span-2">
                             <div
-                                className="prose prose-lg max-w-none"
+                                className="prose prose-lg max-w-none [&_p]:min-h-[10px] [&_p]:mb-[10px]"
                                 dangerouslySetInnerHTML={{ __html: service.content || '' }}
                             />
                         </div>
