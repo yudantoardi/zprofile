@@ -1,49 +1,33 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #f8fafc;
-  /* Slate-50 */
-  --foreground: #0f172a;
-  /* Slate-900 */
-  --primary: #2563eb;
-  /* Blue-600 */
-  --primary-hover: #1d4ed8;
-  --secondary: #eff6ff;
-  /* Blue-50 */
-  --accent: #60a5fa;
-  /* Blue-400 */
-  --border: #e2e8f0;
-  /* Slate-200 */
-  --muted: #64748b;
-  /* Slate-500 */
+@layer base {
+  :root {
+    --background: 248 250 252;
+    /* #f8fafc */
+    --foreground: 15 23 42;
+    /* #0f172a */
+    --primary: 37 99 235;
+    /* #2563eb */
+    --primary-hover: 29 78 216;
+    /* #1d4ed8 */
+    --secondary: 239 246 255;
+    /* #eff6ff */
+    --accent: 96 165 250;
+    /* #60a5fa */
+    --border: 226 232 240;
+    /* #e2e8f0 */
+    --muted: 100 116 139;
+    /* #64748b */
 
-  --radius: 0.75rem;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
-  --color-border: var(--border);
-  --color-muted: var(--muted);
-
-  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui;
-  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui;
-
-  --radius-xl: 1rem;
-  --radius-lg: 0.75rem;
-  --radius-md: 0.5rem;
-  --radius-sm: 0.25rem;
+    --radius: 0.75rem;
+  }
 }
 
 @layer base {
   body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans);
+    @apply bg-background text-foreground font-sans;
   }
 
   h1,
@@ -52,9 +36,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    line-height: 1.2;
+    @apply font-heading font-bold leading-[1.2];
   }
 }
 

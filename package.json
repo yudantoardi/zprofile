@@ -41,8 +41,10 @@
     "zod": "^4.3.4"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.1",
     "@next/bundle-analyzer": "15.1.4",
-    "@tailwindcss/postcss": "^4",
     "@types/node": "20.19.30",
     "@types/nodemailer": "^7.0.4",
     "@types/react": "19.2.9",
@@ -51,7 +53,6 @@
     "compression-webpack-plugin": "^11.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
-    "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",
     "webpack-bundle-analyzer": "^5.2.0"
