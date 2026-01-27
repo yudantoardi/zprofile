@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
+  // Try to disable LightningCSS minification
+  experimental: {
+    cssChunking: true, // Optional: helpful for large CSS
+  },
+  // In Next.js 15, we can try to disable the specific minifier if it's causing issues
+  // Note: Tailwind 4 might still use it internally for processing.
+
+
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
