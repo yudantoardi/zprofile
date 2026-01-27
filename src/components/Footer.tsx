@@ -30,14 +30,17 @@ export default async function Footer() {
                     {/* Brand Column */}
                     <div className="space-y-6">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">
-                                    {(settings?.companyName || 'C').charAt(0)}
-
-                                </span>
-                            </div>
+                            {settings?.logo ? (
+                                <img src={settings.logo} alt={settings.companyName} className="h-10 w-auto" />
+                            ) : (
+                                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                    <span className="text-white font-bold text-xl">
+                                        {(settings?.companyName || 'C').charAt(0)}
+                                    </span>
+                                </div>
+                            )}
                             <span className="text-xl font-heading font-bold text-white tracking-tight">
-                                {settings?.companyName || 'Corp'}
+                                {settings?.companyName || 'CorpProfile'}
                             </span>
                         </Link>
                         <p className="text-sm leading-relaxed text-slate-400">
