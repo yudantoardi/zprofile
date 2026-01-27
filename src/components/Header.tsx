@@ -78,7 +78,7 @@ export default function Header({ settings }: { settings: SiteSettings | null }) 
                             )}
                         </div>
                         <Link href="/contact" className="btn-primary py-2 px-5 text-sm">
-                            Let's Talk
+                            Let&apos;s Talk
                         </Link>
                     </div>
 
@@ -118,7 +118,7 @@ export default function Header({ settings }: { settings: SiteSettings | null }) 
                             </a>
                         )}
                         <Link href="/contact" className="btn-primary w-full text-center" onClick={() => setIsMobileMenuOpen(false)}>
-                            Let's Talk
+                            Let&apos;s Talk
                         </Link>
                     </div>
                 </div>

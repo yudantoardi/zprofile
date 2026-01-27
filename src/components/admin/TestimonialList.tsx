@@ -54,7 +54,7 @@ export default function TestimonialList({ testimonials, onEdit, onDelete, onAdd 
                             </div>
 
                             <p className="text-sm text-slate-600 italic leading-relaxed flex-1 mb-8">
-                                "{item.content}"
+                                &quot;{item.content}&quot;
                             </p>
 
                             <div className="flex gap-2">

@@ -25,7 +25,7 @@ export default function PricingList({ pricings, onEdit }: PricingListProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {pricings.length === 0 ? (
                 <div className="col-span-full py-20 text-center text-muted italic bg-white rounded-3xl border border-border">
-                    No pricing plans found. Click "Add Plan" to create one.
+                    No pricing plans found. Click &quot;Add Plan&quot; to create one.
                 </div>
             ) : (
                 pricings.map((plan) => (

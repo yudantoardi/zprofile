@@ -56,7 +56,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                                         Interested in this service?
                                     </h3>
                                     <p className="text-blue-100 mb-6">
-                                        Let's discuss how we can help your business grow.
+                                        Let&apos;s discuss how we can help your business grow.
                                     </p>
                                     <Link
                                         href="/contact"

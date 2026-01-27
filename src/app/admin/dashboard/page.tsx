@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import Link from 'next/link';
 import { MessageSquare, Users, Briefcase, Eye } from "lucide-react";
 
 export default async function AdminDashboard() {
@@ -55,7 +56,7 @@ export default async function AdminDashboard() {
                 <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-border shadow-sm overflow-hidden">
                     <div className="p-8 border-b border-border flex justify-between items-center">
                         <h3 className="font-heading font-bold text-foreground">Recent Messages</h3>
-                        <a href="/admin/messages" className="text-sm font-bold text-primary hover:underline">View All</a>
+                        <Link href="/admin/messages" className="text-sm font-bold text-primary hover:underline">View All</Link>
                     </div>
                     <div className="divide-y divide-border">
                         {recentMessages.length === 0 ? (
@@ -83,9 +84,9 @@ export default async function AdminDashboard() {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl" />
                     <h3 className="font-heading font-bold text-xl mb-6 relative z-10">Quick Actions</h3>
                     <div className="space-y-4 relative z-10">
-                        <a href="/admin/services" className="block w-full bg-white/10 hover:bg-white/20 p-4 rounded-xl text-sm font-bold transition-all">Manage Services</a>
-                        <a href="/admin/portfolio" className="block w-full bg-white/10 hover:bg-white/20 p-4 rounded-xl text-sm font-bold transition-all">Manage Portfolio</a>
-                        <a href="/admin/settings" className="block w-full bg-white/10 hover:bg-white/20 p-4 rounded-xl text-sm font-bold transition-all">Edit Company Info</a>
+                        <Link href="/admin/services" className="block w-full bg-white/10 hover:bg-white/20 p-4 rounded-xl text-sm font-bold transition-all">Manage Services</Link>
+                        <Link href="/admin/portfolio" className="block w-full bg-white/10 hover:bg-white/20 p-4 rounded-xl text-sm font-bold transition-all">Manage Portfolio</Link>
+                        <Link href="/admin/settings" className="block w-full bg-white/10 hover:bg-white/20 p-4 rounded-xl text-sm font-bold transition-all">Edit Company Info</Link>
                     </div>
                 </div>
             </div>

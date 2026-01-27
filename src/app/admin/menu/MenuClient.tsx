@@ -51,7 +51,7 @@ export default function MenuClient({
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Navigation Menu</h1>
-                    <p className="text-muted">Manage your website's header navigation. Default menus are protected.</p>
+                    <p className="text-muted">Manage your website&apos;s header navigation. Default menus are protected.</p>
                 </div>
                 <button onClick={() => { setEditingItem(null); setIsFormOpen(true); }} className="btn-primary flex items-center gap-2">
                     <Plus size={20} /> Add Menu Item
