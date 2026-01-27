@@ -95,7 +95,7 @@ export default function ServicesSection({
                             1024: { slidesPerView: 3 },
                             1280: { slidesPerView: 4 },
                         }}
-                        className="!pb-16"
+                    // className="!pb-16"
                     >
                         {displayServices.length === 0 ? (
                             <SwiperSlide>
