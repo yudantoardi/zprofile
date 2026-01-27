@@ -12,10 +12,32 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Ziraymedia - Professional Digital Agency",
-  description: "Innovative digital solutions for your business growth.",
-};
+import prisma from "@/lib/prisma";
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const settings = await prisma.siteSettings.findUnique({
+      where: { id: 'singleton' }
+    });
+
+    return {
+      title: settings?.seoTitle || settings?.companyName || "Ziraymedia - Professional Digital Agency",
+      description: settings?.seoDescription || "Innovative digital solutions for your business growth.",
+      icons: {
+        icon: settings?.favicon || '/favicon.ico',
+      },
+    };
+  } catch (error) {
+    console.warn('Metadata generation failed, using defaults.', error);
+    return {
+      title: "Ziraymedia - Professional Digital Agency",
+      description: "Innovative digital solutions for your business growth.",
+      icons: {
+        icon: '/favicon.ico',
+      },
+    };
+  }
+}
 
 export default function RootLayout({
   children,

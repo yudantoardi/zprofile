@@ -14,6 +14,7 @@ export async function saveSettings(formData: FormData) {
     const behance = formData.get('behance') as string;
     const dribbble = formData.get('dribbble') as string;
     const logoUrl = formData.get('logoUrl') as string;
+    const faviconUrl = formData.get('faviconUrl') as string;
 
     // Logo is now uploaded client-side, so we just get the URL
     // If logoUrl is present (not empty), we use it. 
@@ -32,7 +33,8 @@ export async function saveSettings(formData: FormData) {
             linkedin,
             behance,
             dribbble,
-            ...(logoUrl ? { logo: logoUrl } : {})
+            ...(logoUrl ? { logo: logoUrl } : {}),
+            ...(faviconUrl ? { favicon: faviconUrl } : {})
         },
         create: {
             id: 'singleton',
@@ -44,7 +46,8 @@ export async function saveSettings(formData: FormData) {
             linkedin,
             behance,
             dribbble,
-            logo: logoUrl || ''
+            logo: logoUrl || '',
+            favicon: faviconUrl || ''
         }
     });
 

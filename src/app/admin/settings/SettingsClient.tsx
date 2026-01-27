@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Globe, Save, Mail, Phone, MapPin, Instagram, Linkedin, Bookmark, Dribbble } from "lucide-react";
 import { saveSettings } from "./actions";
 import LogoUploader from "./LogoUploader";
+import FaviconUploader from "./FaviconUploader";
 import { useToast } from "@/components/Toast";
 import { upload } from "@vercel/blob/client";
 
@@ -18,6 +19,7 @@ interface SettingsClientProps {
         behance: string | null;
         dribbble: string | null;
         logo: string | null;
+        favicon: string | null;
     };
 }
 
@@ -34,6 +36,7 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
         try {
             const formData = new FormData(e.currentTarget);
             const logoFile = formData.get('logoFile') as File;
+            const faviconFile = formData.get('faviconFile') as File;
 
             if (logoFile && logoFile.size > 0) {
                 const blob = await upload(logoFile.name, logoFile, {
@@ -44,6 +47,14 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
                     },
                 });
                 formData.set('logoUrl', blob.url);
+            }
+
+            if (faviconFile && faviconFile.size > 0) {
+                const blob = await upload(faviconFile.name, faviconFile, {
+                    access: 'public',
+                    handleUploadUrl: '/api/upload',
+                });
+                formData.set('faviconUrl', blob.url);
             }
 
             await saveSettings(formData);
@@ -71,7 +82,10 @@ export default function SettingsClient({ settings }: SettingsClientProps) {
                         <Globe size={18} className="text-primary" /> Identity
                     </h3>
 
-                    <LogoUploader initialLogo={settings.logo} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <LogoUploader initialLogo={settings.logo} />
+                        <FaviconUploader initialFavicon={settings.favicon} />
+                    </div>
 
                     <div className="space-y-6">
                         <div>

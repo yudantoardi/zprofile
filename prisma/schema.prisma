@@ -16,6 +16,7 @@ datasource db {
 model SiteSettings {
   id            String   @id @default("singleton")
   logo          String?
+  favicon       String?
   companyName   String   @default("My Company")
   address       String? 
   email         String?
