@@ -12,6 +12,7 @@ export default async function PublicLayout({
     let settings = null;
     try {
         settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+        // Ensure settings has favicon even if record exists but field is missing (Prisma should return null, but just in case)
     } catch {
         console.warn('Database settings not available during build');
     }

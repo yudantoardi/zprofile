@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await prisma.siteSettings.findUnique({
       where: { id: 'singleton' }
-    });
+    }) as any;
 
     return {
       title: settings?.seoTitle || settings?.companyName || "Ziraymedia - Professional Digital Agency",
