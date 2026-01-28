@@ -22,7 +22,7 @@ export default function Hero({
     bgImage
 }: HeroProps) {
     return (
-        <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background">
+        <section className="px-4 relative min-h-[90vh] flex items-center overflow-hidden bg-background">
             {/* Background Decorative Elements or Image */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
 
