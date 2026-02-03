@@ -7,11 +7,16 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 interface AdminLayoutClientProps {
     children: React.ReactNode;
     unreadCount: number;
+    initialIsAuthenticated?: boolean;
 }
 
-export default function AdminLayoutClient({ children, unreadCount }: AdminLayoutClientProps) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+export default function AdminLayoutClient({
+    children,
+    unreadCount,
+    initialIsAuthenticated = false
+}: AdminLayoutClientProps) {
+    const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated);
+    const [isLoading, setIsLoading] = useState(!initialIsAuthenticated);
     const router = useRouter();
     const pathname = usePathname();
 
@@ -29,8 +34,10 @@ export default function AdminLayoutClient({ children, unreadCount }: AdminLayout
     };
 
     useEffect(() => {
-        checkAuth();
-    }, []);
+        if (!initialIsAuthenticated) {
+            checkAuth();
+        }
+    }, [initialIsAuthenticated]);
 
     useEffect(() => {
         const handleAuthChange = () => {
@@ -47,6 +54,8 @@ export default function AdminLayoutClient({ children, unreadCount }: AdminLayout
         const isLoginPage = pathname === '/admin';
 
         if (!isAuthenticated && !isLoginPage) {
+            // Fallback check if navigating to protected route while state says unauthenticated
+            checkAuth();
             router.push('/admin');
         } else if (isAuthenticated && isLoginPage) {
             router.push('/admin/dashboard');

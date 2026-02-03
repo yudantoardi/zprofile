@@ -8,6 +8,7 @@ export async function savePortfolio(formData: FormData) {
 
     const id = formData.get('id') as string;
     const title = formData.get('title') as string;
+    const slug = formData.get('slug') as string;
     const categoryId = formData.get('categoryId') as string;
     const description = formData.get('description') as string;
     const content = formData.get('content') as string;
@@ -20,6 +21,7 @@ export async function savePortfolio(formData: FormData) {
 
     const data = {
         title,
+        slug,
         categoryId: categoryId || null,
         description,
         content,

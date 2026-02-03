@@ -15,8 +15,23 @@ interface PortfolioFormProps {
 export default function PortfolioForm({ initialData, categories, onClose, onSave }: PortfolioFormProps) {
     const [preview, setPreview] = useState<string | null>(initialData?.thumbnail || null);
     const [content, setContent] = useState(initialData?.content || '');
+    const [slug, setSlug] = useState(initialData?.slug || '');
     const [isSaving, setIsSaving] = useState(false);
     const [progress, setProgress] = useState(0);
+
+    const generateSlug = (text: string) => {
+        return text
+            .toLowerCase()
+            .replace(/[^\w ]+/g, '')
+            .replace(/ +/g, '-');
+    };
+
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const title = e.target.value;
+        if (!initialData) { // Only auto-generate slug for new projects
+            setSlug(generateSlug(title));
+        }
+    };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -34,6 +49,7 @@ export default function PortfolioForm({ initialData, categories, onClose, onSave
 
         const formData = new FormData(e.currentTarget);
         formData.set('content', content);
+        formData.set('slug', slug);
 
         // Simulate progress for better UX
         const progressInterval = setInterval(() => {
@@ -91,7 +107,11 @@ export default function PortfolioForm({ initialData, categories, onClose, onSave
                         <div className="space-y-6">
                             <div>
                                 <label className="block text-sm font-bold text-foreground mb-2">Project Title</label>
-                                <input name="title" required defaultValue={initialData?.title} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" placeholder="E.g. Digital Transformation" disabled={isSaving} />
+                                <input name="title" required defaultValue={initialData?.title} onChange={handleTitleChange} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" placeholder="E.g. Digital Transformation" disabled={isSaving} />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-foreground mb-2">Slug</label>
+                                <input name="slug" required value={slug} onChange={(e) => setSlug(e.target.value)} className="w-full bg-slate-50 border border-border p-4 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none" placeholder="digital-transformation" disabled={isSaving} />
                             </div>
                             <div>
                                 <label className="block text-sm font-bold text-foreground mb-2">Category</label>

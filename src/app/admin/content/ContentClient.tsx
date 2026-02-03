@@ -19,6 +19,10 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
         label: 'Homepage',
         icon: Layout,
         fields: [
+            { key: 'seo_title', label: 'Page Title (SEO)', type: 'text', section: 'SEO Settings' },
+            { key: 'seo_description', label: 'Meta Description (SEO)', type: 'textarea', section: 'SEO Settings' },
+            { key: 'seo_og_image', label: 'OG Image (SEO)', type: 'image', section: 'SEO Settings' },
+
             { key: 'hero_subtitle', label: 'Hero Subtitle', type: 'text', section: 'Hero Section' },
             { key: 'hero_title', label: 'Hero Title', type: 'text', section: 'Hero Section' },
             { key: 'hero_description', label: 'Hero Description', type: 'textarea', section: 'Hero Section' },
@@ -58,6 +62,10 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
         label: 'About Page',
         icon: Info,
         fields: [
+            { key: 'seo_title', label: 'Page Title (SEO)', type: 'text', section: 'SEO Settings' },
+            { key: 'seo_description', label: 'Meta Description (SEO)', type: 'textarea', section: 'SEO Settings' },
+            { key: 'seo_og_image', label: 'OG Image (SEO)', type: 'image', section: 'SEO Settings' },
+
             { key: 'about_page_subtitle', label: 'Section Subtitle', type: 'text', section: 'About Section' },
             { key: 'about_page_title', label: 'Section Title', type: 'text', section: 'About Section' },
             { key: 'about_page_description', label: 'About Paragraph', type: 'textarea', section: 'About Section' },
@@ -82,6 +90,10 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
         label: 'Services Page',
         icon: Briefcase,
         fields: [
+            { key: 'seo_title', label: 'Page Title (SEO)', type: 'text', section: 'SEO Settings' },
+            { key: 'seo_description', label: 'Meta Description (SEO)', type: 'textarea', section: 'SEO Settings' },
+            { key: 'seo_og_image', label: 'OG Image (SEO)', type: 'image', section: 'SEO Settings' },
+
             { key: 'services_page_title', label: 'Page Title', type: 'text', section: 'Header Section' },
             { key: 'services_page_description', label: 'Page Description', type: 'textarea', section: 'Header Section' },
 
@@ -105,6 +117,10 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
         label: 'Portfolio Page',
         icon: ImageIcon,
         fields: [
+            { key: 'seo_title', label: 'Page Title (SEO)', type: 'text', section: 'SEO Settings' },
+            { key: 'seo_description', label: 'Meta Description (SEO)', type: 'textarea', section: 'SEO Settings' },
+            { key: 'seo_og_image', label: 'OG Image (SEO)', type: 'image', section: 'SEO Settings' },
+
             { key: 'portfolio_page_title', label: 'Page Title', type: 'text', section: 'Page Header' },
             { key: 'portfolio_page_description', label: 'Page Description', type: 'textarea', section: 'Page Header' },
         ]
@@ -113,6 +129,10 @@ const PAGE_CONFIG: Record<PageKey, { label: string; icon: any; fields: FieldConf
         label: 'Pricing Page',
         icon: DollarSign,
         fields: [
+            { key: 'seo_title', label: 'Page Title (SEO)', type: 'text', section: 'SEO Settings' },
+            { key: 'seo_description', label: 'Meta Description (SEO)', type: 'textarea', section: 'SEO Settings' },
+            { key: 'seo_og_image', label: 'OG Image (SEO)', type: 'image', section: 'SEO Settings' },
+
             { key: 'pricing_page_title', label: 'Page Title', type: 'text', section: 'Page Header' },
             { key: 'pricing_page_description', label: 'Page Description', type: 'textarea', section: 'Page Header' },
         ]
@@ -184,10 +204,20 @@ export default function ContentClient({ initialContent }: { initialContent: Stat
             }
         });
 
-        await saveStaticContent(formData);
-        setIsSaving(false);
-        alert('Content saved successfully!');
-        window.location.reload();
+        try {
+            const result = await saveStaticContent(formData);
+            if (result && !result.success) {
+                alert(`Error: ${result.error}`);
+            } else {
+                alert('Content saved successfully!');
+                window.location.reload();
+            }
+        } catch (error: any) {
+            console.error('Failed to save:', error);
+            alert('A network error occurred. Please try again.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const config = PAGE_CONFIG[activeTab];

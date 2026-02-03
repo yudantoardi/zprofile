@@ -26,8 +26,10 @@ export default function AdminLogin() {
             const data = await response.json();
 
             if (response.ok) {
-                // Clear password field and redirect to dashboard
+                // Clear password field and notify layout of auth change
                 setPassword('');
+                window.dispatchEvent(new CustomEvent('auth-change'));
+                
                 // Small delay to ensure cookie is set before redirect
                 setTimeout(() => {
                     router.push('/admin/dashboard');
