@@ -3,8 +3,13 @@ import PageHeader from "@/components/PageHeader";
 import ServicesSection from "@/components/home/ServicesSection";
 import CTASection from "@/components/home/CTASection";
 import * as LucideIcons from "lucide-react";
+import { getPageMetadata } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata() {
+  return getPageMetadata('services');
+}
 
 export default async function ServicesPage() {
     let content: any[] = [];

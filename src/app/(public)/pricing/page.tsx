@@ -4,6 +4,13 @@ import CTASection from "@/components/home/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import { Check } from "lucide-react";
 import Link from "next/link";
+import { getPageMetadata } from "@/lib/metadata";
+
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata() {
+  return getPageMetadata('pricing');
+}
 
 export default async function PricingPage() {
     let content: any[] = [];

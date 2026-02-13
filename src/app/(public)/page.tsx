@@ -6,8 +6,13 @@ import WorksSection from "@/components/home/WorksSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 import prisma from "@/lib/prisma";
+import { getPageMetadata } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata() {
+  return getPageMetadata('homepage');
+}
 
 export default async function Home() {
   let content: any[] = [];

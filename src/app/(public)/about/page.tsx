@@ -4,6 +4,11 @@ import AboutSection from "@/components/home/AboutSection";
 import CTASection from "@/components/home/CTASection";
 import * as LucideIcons from "lucide-react";
 import { Smile, Globe, Users } from "lucide-react";
+import { getPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata() {
+  return getPageMetadata('about');
+}
 
 export default async function AboutPage() {
     let content: any[] = [];

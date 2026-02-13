@@ -17,10 +17,12 @@ export async function POST(request: Request) {
             }
         });
 
+        /* 
         // Send email notification (don't await to avoid blocking response)
         sendInquiryEmail({ name, email, phone, message }).catch(err =>
             console.error('Email notification failed:', err)
         );
+        */
 
         return NextResponse.json(newMessage);
     } catch (error) {

@@ -2,8 +2,13 @@ import PageHeader from "@/components/PageHeader";
 import WorksSection from "@/components/home/WorksSection";
 import CTASection from "@/components/home/CTASection";
 import prisma from "@/lib/prisma";
+import { getPageMetadata } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata() {
+  return getPageMetadata('portfolio');
+}
 
 export default async function PortfolioPage() {
     let content: any[] = [];
